@@ -15,6 +15,7 @@ class AppTheme {
     ),
 
     textTheme: const TextTheme(
+      displaySmall: TextStyle(fontWeight: FontWeight.bold),
       headlineMedium: TextStyle(color: Colors.white,)
     ),
 

@@ -18,6 +18,24 @@ final appRouter = GoRouter(
     ),
     
     GoRoute(
+      path: '/email',
+      name: EmailScreen.name,
+      builder: (context, state) => const EmailScreen(),
+    ),
+    
+    GoRoute(
+      path: '/verification',
+      name: VerificationScreen.name,
+      builder: (context, state) => const VerificationScreen(),
+    ),
+    
+    GoRoute(
+      path: '/reset_password',
+      name: ResetPasswordScreen.name,
+      builder: (context, state) => const ResetPasswordScreen(),
+    ),
+    
+    GoRoute(
       path: '/home',
       name: HomeScreen.name,
       builder: (context, state) => const HomeScreen(),

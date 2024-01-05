@@ -31,4 +31,6 @@ class FirebaseAuthService {
       debugPrint(e.toString());
     }
   }
+
+  
 }
