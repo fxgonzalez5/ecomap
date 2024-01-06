@@ -16,7 +16,22 @@ class AppTheme {
 
     textTheme: const TextTheme(
       displaySmall: TextStyle(fontWeight: FontWeight.bold),
-      headlineMedium: TextStyle(color: Colors.white,)
+      headlineMedium: TextStyle(color: Colors.white),
+      titleLarge: TextStyle(fontWeight: FontWeight.bold),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      border: InputBorder.none,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade400, width: Responsive(context).hp(0.12)),
+        borderRadius: BorderRadius.circular(Responsive(context).ip(0.5)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade400, width: Responsive(context).hp(0.12)),
+        borderRadius: BorderRadius.circular(Responsive(context).ip(0.5)),
+      ),
+      hintStyle: TextStyle(color: Colors.grey.shade400, fontWeight: FontWeight.normal),
     ),
 
     filledButtonTheme: FilledButtonThemeData(
