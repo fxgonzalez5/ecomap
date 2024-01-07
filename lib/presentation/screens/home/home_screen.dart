@@ -75,7 +75,7 @@ class _HomeView extends StatelessWidget {
               _CustomCard(
                 text: 'Resgistrar Formulario',
                 imagePath: 'assets/images/card1.png',
-                onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+                onTap: () => context.pushNamed(Form1Screen.name)
               ),
               _CustomCard(
                 text: 'Reportes',

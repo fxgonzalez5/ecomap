@@ -22,5 +22,23 @@ final appRouter = GoRouter(
       name: HomeScreen.name,
       builder: (context, state) => const HomeScreen(),
     ),
+    
+    GoRoute(
+      path: '/form1',
+      name: Form1Screen.name,
+      builder: (context, state) => const Form1Screen(),
+    ),
+    
+    GoRoute(
+      path: '/form2',
+      name: Form2Screen.name,
+      builder: (context, state) => const Form2Screen(),
+    ),
+    
+    GoRoute(
+      path: '/form3',
+      name: Form3Screen.name,
+      builder: (context, state) => const Form3Screen(),
+    ),
   ],
 );
