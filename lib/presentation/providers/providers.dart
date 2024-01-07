@@ -1,1 +1,1 @@
-export 'package:ecomap/presentation/providers/login_provider.dart';
+export 'package:ecomap/presentation/providers/auth_provider.dart';

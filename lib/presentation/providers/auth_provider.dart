@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LoginProvider extends ChangeNotifier {
-  final formKey = GlobalKey<FormState>();
+class AuthProvider extends ChangeNotifier {
+  GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
   String email = '';
   String password = '';
-  bool _isVisible = false;
+  String confirmPassword = '';
   bool _isLoading = false;
-
-  bool get isVisible => _isVisible;
-  set isVisible(bool value) {
-    _isVisible = value;
-    notifyListeners();
-  }
 
   bool get isLoading => _isLoading;
   set isLoading(bool value) {
