@@ -43,7 +43,7 @@ class Form3Screen extends StatelessWidget {
                       children: [
                         CustomInputText(
                           label: 'Nombre',
-                          hintText: 'Ingrese el teléfono',
+                          hintText: 'Ingrese el nombre',
                         ),
                         CustomInputText(
                           label: 'Cargo en la organización',

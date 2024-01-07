@@ -36,13 +36,13 @@ class Form4Screen extends StatelessWidget {
                 Form(
                   child: Column(
                     children: [
-                      buildCustomInputText('Número de beneficiarios:'),
-                      buildCustomInputText('Número de familias:'),
-                      buildCustomInputText('Número de menores de edad:'),
-                      buildCustomInputText('Número de hombres:'),
-                      buildCustomInputText('Número de mujeres:'),
-                      const CustomRadioButton(label: '¿Existen discapacitados?'),
-                      buildCustomInputText('Número de discapacitados'),
+                      buildCustomInputText('Número de Beneficiarios:'),
+                      buildCustomInputText('Número de Familias:'),
+                      buildCustomInputText('Número de Menores de Edad:'),
+                      buildCustomInputText('Número de Hombres:'),
+                      buildCustomInputText('Número de Mujeres:'),
+                      const CustomRadioButton(label: '¿Existen Discapacitados?'),
+                      buildCustomInputText('Número de Discapacitados'),
                       FilledButton(
                         onPressed: () => context.pushNamed(Form5Screen.name),
                         child: const Text('Siguiente')

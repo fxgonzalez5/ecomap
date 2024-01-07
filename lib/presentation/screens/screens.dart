@@ -1,3 +1,5 @@
+export 'package:ecomap/presentation/screens/forms/form9_screen.dart';
+export 'package:ecomap/presentation/screens/forms/form6_screen.dart';
 export 'package:ecomap/presentation/screens/forms/form5_screen.dart';
 export 'package:ecomap/presentation/screens/forms/form4_screen.dart';
 export 'package:ecomap/presentation/screens/forms/form3_screen.dart';
