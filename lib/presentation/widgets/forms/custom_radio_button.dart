@@ -26,6 +26,7 @@ class CustomRadioButton<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: texts.bodyLarge),
+        SizedBox(height: responsive.hp(1)),
         Row(
           children: [
             Radio(

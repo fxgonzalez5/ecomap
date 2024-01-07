@@ -34,6 +34,22 @@ class AppTheme {
       hintStyle: TextStyle(color: Colors.grey.shade400, fontWeight: FontWeight.normal),
     ),
 
+    dropdownMenuTheme: const DropdownMenuThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        isDense: true,
+      )
+    ),
+
+    radioTheme: const RadioThemeData(
+      visualDensity: VisualDensity.compact
+    ),
+
+    listTileTheme: const ListTileThemeData(
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      visualDensity: VisualDensity.compact
+    ),
+
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
         fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, Responsive(context).hp(6))),

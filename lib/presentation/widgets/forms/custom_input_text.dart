@@ -25,7 +25,6 @@ class CustomInputText extends StatelessWidget {
     final texts = Theme.of(context).textTheme;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [

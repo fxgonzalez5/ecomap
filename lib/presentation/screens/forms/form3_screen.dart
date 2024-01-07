@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ecomap/config/theme/responsive.dart';
+import 'package:ecomap/presentation/widgets/widgets.dart';
+import 'package:ecomap/presentation/screens/screens.dart';
 
 
 class Form3Screen extends StatelessWidget {
@@ -9,156 +12,87 @@ class Form3Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = Responsive(context);
+    final texts = Theme.of(context).textTheme;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text('Datos'),
-            Text('Orgnización', style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 65, 197, 230)))
-          ],
-        ),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-            child: const Text(
-              'Contacto',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            collapsedHeight: responsive.hp(8),
+            expandedHeight: responsive.hp(12),
+            pinned: true,
+            flexibleSpace: const FlexibleSpaceBar(
+              centerTitle: true,
+              expandedTitleScale: 1,
+              titlePadding: EdgeInsets.zero,
+              title: Head(title: 'Organización')
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: const Text('Nombre'),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-            padding: const EdgeInsets.only(left: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.grey)),
-            child: const TextField(
-              decoration: InputDecoration(
-                hintText: "Ingrese Nombre",
-                hintStyle: TextStyle(fontSize: 12.0),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: const Text('Cargo en la organización'),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-            padding: const EdgeInsets.only(left: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.grey)),
-            child: const TextField(
-              decoration: InputDecoration(
-                hintText: "Ingrese el Cargo",
-                hintStyle: TextStyle(fontSize: 12.0),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: const Text('Teléfono'),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-            padding: const EdgeInsets.only(left: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.grey)),
-            child: const TextField(
-              decoration: InputDecoration(
-                hintText: "Ingrese el Teléfono",
-                hintStyle: TextStyle(fontSize: 12.0),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-                left: 20.0, right: 20.0, bottom: 10.0, top: 10.0),
-            child: const Text(
-              'Cuenta Bancaria',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-            child: const Text('Tipo de Cuenta'),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+
+          SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: responsive.hp(2.5), horizontal: responsive.wp(5)),
+            sliver: SliverList.list(
               children: [
-                Radio(
-                  value: 'Ahorro',
-                  groupValue: 'Ahorro',
-                  onChanged: (value) { },
+                Text('Contacto', style: texts.titleLarge),
+                SizedBox(height: responsive.hp(2)),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
+                  child: const Form(
+                    child: Column(
+                      children: [
+                        CustomInputText(
+                          label: 'Nombre',
+                          hintText: 'Ingrese el teléfono',
+                        ),
+                        CustomInputText(
+                          label: 'Cargo en la organización',
+                          hintText: 'Ingrese el cargo',
+                        ),
+                        CustomInputText(
+                          label: 'Teléfono',
+                          hintText: 'Ingrese el teléfono',
+                          keyboardType: TextInputType.number,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                const Text("Ahorro"),
-                Radio(
-                  value: 'Corriente',
-                  groupValue: 'Ahorro',
-                  onChanged: (value) {},
+                Text('Cuenta Bancaria', style: texts.titleLarge),
+                SizedBox(height: responsive.hp(2)),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
+                  child: Form(
+                    child: Column(
+                      children: [
+                        CustomRadioButton(
+                          label: 'Tipo de Cuenta',
+                          titles: const ['Ahorro', 'Corriente'],
+                          values: const ['Ahorro', 'Corriente'],
+                          groupValue: 'Ahorro',
+                          onChanged: (value) {},
+                        ),
+                        const CustomDropdownButton(
+                          label: 'Institución Financiera',
+                          hintText: 'Seleccione banco',
+                          options: [],
+                        ),
+                        const CustomInputText(
+                          label: 'Número de cuenta',
+                          hintText: 'Ingrese número de cuenta',
+                          keyboardType: TextInputType.number,
+                        ),
+                        FilledButton(
+                          onPressed: () => context.pushNamed(Form4Screen.name),
+                          child: const Text('Siguiente')
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                const Text("Corriente"),
               ],
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-            child: const Text('Institución Financiera'),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-            child: DropdownButton<String>(
-              hint: const Text('seleccionar banco'),
-              value: null,
-              items: const [],
-              onChanged: (newValue) {},
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-            child: const Text('Número de cuenta'),
-          ),
-          Container(
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-            padding: const EdgeInsets.only(left: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.grey)),
-            child: const TextField(
-              decoration: InputDecoration(
-                hintText: "Ingrese número de cuenta",
-                hintStyle: TextStyle(fontSize: 12.0),
-              ),
-            ),
-          ),
-          Container(
-              margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Navegar a la siguiente pantalla
-                  },
-                  child: const Text("Siguiente")))
+          )
         ],
       ),
    );
