@@ -63,7 +63,7 @@ class Form6Screen extends StatelessWidget {
                           hintText: 'Ingrese una breve descripción',
                         ),
                         FilledButton(
-                          onPressed: () => context.pushNamed(Form9Screen.name),
+                          onPressed: () => context.pushNamed(Form7Screen.name),
                           child: const Text('Siguiente')
                         )
                       ],
