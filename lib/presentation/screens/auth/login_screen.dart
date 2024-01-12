@@ -104,31 +104,7 @@ class _LoginForm extends StatelessWidget {
             onPressed: authProvider.isLoading ? null : () async {
               FocusScope.of(context).requestFocus(FocusNode());
               if (formKey.currentState?.validate() == true) {
-                authProvider.isLoading = true;
-
-                final errorMessage = await firebaseAuthService.login(authProvider.email.trim(), authProvider.password.trim());
-                switch (errorMessage) {
-                  case 'success':
-                    context.pushReplacementNamed(HomeScreen.name);
-                    authProvider.isLoading = false;
-                    break;
-                  case null:
-                    authProvider.isLoading = false;
-                    Future.microtask(() => showSnackBar(context, 'Lo sentimos, no se pudo iniciar sesión'));
-                    break;
-                  case 'user-not-found':
-                    authProvider.isLoading = false;
-                    Future.microtask(() => showSnackBar(context, 'No se ha encontrado una cuenta con ese correo electrónico'));
-                    break;
-                  case 'wrong-password':
-                    authProvider.isLoading = false;
-                    Future.microtask(() => showSnackBar(context, 'Correo o contraseña incorrecto'));
-                    break;
-                  default:
-                    authProvider.isLoading = false;
-                    Future.microtask(() => showSnackBar(context, 'Correo o contraseña inválido'));
-                    break;
-                }
+                authProvider.login(context, showSnackBar);
               }
             },
             child: authProvider.isLoading 

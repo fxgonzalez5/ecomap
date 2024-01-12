@@ -1,8 +1,11 @@
+import 'package:ecomap/domain/domain.dart';
+import 'package:ecomap/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/services/firebase_auth_service.dart';
+import 'package:provider/provider.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -51,6 +54,7 @@ class HomeScreen extends StatelessWidget {
       body: const _HomeView()
    );
   }
+  
 }
 
 class _HomeView extends StatelessWidget {
@@ -60,6 +64,7 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final authProvider = context.watch<AuthProvider>();
 
     return Stack(
       children: [
@@ -70,22 +75,28 @@ class _HomeView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: responsive.hp(12)),
-              Text('Bienvenido Nombre', style: texts.headlineMedium),
+              Text('Bienvenido ${authProvider.currentUser?.name}', style: texts.headlineMedium),
               const Spacer(),
-              _CustomCard(
-                text: 'Resgistrar Formulario',
-                imagePath: 'assets/images/card1.png',
-                onTap: () => context.pushNamed(Form1Screen.name)
-              ),
-              _CustomCard(
-                text: 'Reportes',
-                imagePath: 'assets/images/card2.png',
-                onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+              Visibility(
+                visible: authProvider.currentUser?.role == Roles.tecnicoCampo.name ,
+                child: _CustomCard(
+                  text: 'Resgistrar Formulario',
+                  imagePath: 'assets/images/card1.png',
+                  onTap: () => context.pushNamed(Form1Screen.name)
+                ),
               ),
               _CustomCard(
                 text: 'Visualizar Información',
                 imagePath: 'assets/images/card3.png',
                 onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+              ),
+              Visibility(
+                visible: authProvider.currentUser?.role == Roles.tecnicoSeguimiento.name,
+                child: _CustomCard(
+                  text: 'Reportes',
+                  imagePath: 'assets/images/card2.png',
+                  onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+                ),
               ),
               const Spacer(flex: 2,),
             ],

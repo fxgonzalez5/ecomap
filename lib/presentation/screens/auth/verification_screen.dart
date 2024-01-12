@@ -45,7 +45,7 @@ class VerificationScreen extends StatelessWidget {
             ),
             const Spacer(),
             FilledButton(
-              onPressed: () => context.pushReplacementNamed(ResetPasswordScreen.name),
+              onPressed: () => context.pop(),
               child: const Text('Continuar')
             )
           ],
