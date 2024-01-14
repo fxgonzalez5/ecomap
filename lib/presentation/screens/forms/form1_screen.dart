@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart' as intl;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';

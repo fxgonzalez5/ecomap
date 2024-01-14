@@ -104,7 +104,7 @@ class _LoginForm extends StatelessWidget {
             onPressed: authProvider.isLoading ? null : () async {
               FocusScope.of(context).requestFocus(FocusNode());
               if (formKey.currentState?.validate() == true) {
-                authProvider.login(context, showSnackBar);
+                authProvider.login(context);
               }
             },
             child: authProvider.isLoading 

@@ -1,3 +1,4 @@
+import 'package:ecomap/config/helpers/helpers.dart';
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/screens/auth/verification_screen.dart';
 import 'package:ecomap/presentation/screens/home/home_screen.dart';
@@ -28,7 +29,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  login(BuildContext context, Function actionShowMessage)async{
+  login(BuildContext context)async{
     _isLoading = true;
 
     final errorMessage = await _firebaseAuthService.login(email.trim(), password.trim());    
@@ -36,24 +37,24 @@ class AuthProvider extends ChangeNotifier {
       case 'success':
         final user = await _firebaseAuthService.getUserByEmail(email.trim());
         currentUser = user;
-        context.pushNamed(HomeScreen.name);
+        Future.microtask(() => context.pushNamed(HomeScreen.name));
         isLoading = false;
         break;
       case null:
         isLoading = false;
-        Future.microtask(() => actionShowMessage(context, 'Lo sentimos, no se pudo iniciar sesión'));
+        Future.microtask(() => showSnackBar(context, 'Lo sentimos, no se pudo iniciar sesión'));
         break;
       case 'user-not-found':
         isLoading = false;
-        Future.microtask(() => actionShowMessage(context, 'No se ha encontrado una cuenta con ese correo electrónico'));
+        Future.microtask(() => showSnackBar(context, 'No se ha encontrado una cuenta con ese correo electrónico'));
         break;
       case 'wrong-password':
         isLoading = false;
-        Future.microtask(() => actionShowMessage(context, 'Correo o contraseña incorrecto'));
+        Future.microtask(() => showSnackBar(context, 'Correo o contraseña incorrecto'));
         break;
       default:
         isLoading = false;
-        Future.microtask(() => actionShowMessage(context, 'Correo o contraseña inválido'));
+        Future.microtask(() => showSnackBar(context, 'Correo o contraseña inválido'));
         break;
     }
   }
@@ -62,6 +63,6 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     await _firebaseAuthService.recoveryPassword(email.trim());
     isLoading = false;
-    context.pushReplacementNamed(VerificationScreen.name);
+    Future.microtask(() => context.pushReplacementNamed(VerificationScreen.name));
   }
 }

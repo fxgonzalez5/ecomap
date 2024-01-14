@@ -1,5 +1,3 @@
-import 'package:ecomap/domain/domain.dart';
-
 class CurrentUser{
   String name;
   String email;
