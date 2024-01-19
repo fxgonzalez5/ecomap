@@ -65,4 +65,11 @@ class AuthProvider extends ChangeNotifier {
     isLoading = false;
     Future.microtask(() => context.pushReplacementNamed(VerificationScreen.name));
   }
+
+  Future<void> getCurrentUser() async{
+    currentUser = await _firebaseAuthService.getCurrentUser();
+    print(currentUser?.email);
+    print(currentUser?.role);
+    print(currentUser?.project);
+  }
 }

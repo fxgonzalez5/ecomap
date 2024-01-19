@@ -14,7 +14,7 @@ class Head extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text('Datos', style: texts.displaySmall),
-        Text(title, style: texts.displaySmall!.copyWith(color: colors.primary))
+        Text(title, style: texts.displaySmall!.copyWith(color: colors.primary)),
       ],
     );
   }

@@ -52,4 +52,10 @@ class FirebaseAuthService {
     _auth.sendPasswordResetEmail(email: email);
   }
   
+  Future<CurrentUser?> getCurrentUser()async{
+    if(_auth.currentUser != null){
+      return await getUserByEmail(_auth.currentUser!.email!);
+    }
+    return null;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
 import 'package:go_router/go_router.dart';
 
 //* GoRouter configuration
@@ -33,7 +34,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home',
       name: HomeScreen.name,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => HomeScreen(),
     ),
     GoRoute(
       path: '/form1',
@@ -79,6 +80,26 @@ final appRouter = GoRouter(
       path: '/form9',
       name: Form9Screen.name,
       builder: (context, state) => const Form9Screen(),
+    ),
+    GoRoute(
+      path: '/restauracion-forestal-beneficiario-form',
+      name: FormRestauracionForestalBeneficiarioScreen.name,
+      builder: (context, state) => FormRestauracionForestalBeneficiarioScreen(),
+    ),
+    GoRoute(
+      path: '/restauracion-forestal-ubicacion-form',
+      name: FormRestauracionForestalUbicacionScreen.name,
+      builder: (context, state) => FormRestauracionForestalUbicacionScreen(),
+    ),
+    GoRoute(
+      path: '/restauracion-forestal-potenciacion-form',
+      name: FormRestauracionForestalPotenciacionScreen.name,
+      builder: (context, state) => FormRestauracionForestalPotenciacionScreen(),
+    ),
+    GoRoute(
+      path: '/visualization-restauracion-forestal',
+      name: VisualizationRestauracionForestalScreen.name,
+      builder: (context, state) => VisualizationRestauracionForestalScreen(),
     ),
   ],
 );

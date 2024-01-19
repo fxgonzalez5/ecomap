@@ -6,13 +6,17 @@ class CustomDropdownButton<T> extends StatelessWidget {
   final String hintText;
   final List<DropdownMenuEntry<T>> options;
   final ValueChanged<T?>? onSelected;
+  final T? initialSelection;
+  final TextEditingController? controller;
 
   const CustomDropdownButton({
     super.key,
     required this.label,
     required this.hintText, 
     required this.options,
-    this.onSelected
+    this.onSelected,
+    this.initialSelection,
+    this.controller
   });
 
   @override
@@ -33,6 +37,8 @@ class CustomDropdownButton<T> extends StatelessWidget {
                 hintText: hintText,
                 dropdownMenuEntries: options,
                 onSelected: onSelected,
+                initialSelection: initialSelection,
+                controller: controller,
               );
             },
           ),

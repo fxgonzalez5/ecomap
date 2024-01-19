@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    
     final appBar = AppBar(
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.green,
@@ -47,7 +47,6 @@ class HomeScreen extends StatelessWidget {
         )
       ],
     );
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: appBar,
@@ -82,13 +81,13 @@ class _HomeView extends StatelessWidget {
                 child: _CustomCard(
                   text: 'Resgistrar Formulario',
                   imagePath: 'assets/images/card1.png',
-                  onTap: () => context.pushNamed(Form1Screen.name)
+                  onTap: () => navigateRegisterForm(context, authProvider.currentUser!.project)
                 ),
               ),
               _CustomCard(
                 text: 'Visualizar Información',
                 imagePath: 'assets/images/card3.png',
-                onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+                onTap: () => navigateVisualization(context, authProvider.currentUser!.project)
               ),
               Visibility(
                 visible: authProvider.currentUser?.role == Roles.tecnicoSeguimiento.name,
@@ -104,6 +103,18 @@ class _HomeView extends StatelessWidget {
         )
       ],
     );
+  }
+
+  navigateRegisterForm(BuildContext context, String project){
+    if(Projects.restauracionForestal.name == project){
+      return context.pushNamed(FormRestauracionForestalBeneficiarioScreen.name);
+    }
+  }
+
+  navigateVisualization(BuildContext context, String project){
+    if(Projects.restauracionForestal.name == project){
+      return context.pushNamed(VisualizationRestauracionForestalScreen.name);
+    }
   }
 }
 

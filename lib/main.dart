@@ -1,3 +1,4 @@
+import 'package:ecomap/di/dependencyInjection.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +9,7 @@ import 'package:ecomap/presentation/providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await initializeDependencyInjection();
   runApp(const MyApp());
 }
 
@@ -22,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ...getProviders()
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -8,6 +8,8 @@ class CustomInputText extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final Function()? onTap;
 
   const CustomInputText({
     super.key,
@@ -17,6 +19,8 @@ class CustomInputText extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.validator,
+    this.controller,
+    this.onTap
   });
 
   @override
@@ -43,6 +47,8 @@ class CustomInputText extends StatelessWidget {
             ),
             onChanged: onChanged,
             validator: validator,
+            controller: controller,
+            onTap: onTap,
           ),
         ),
       ],
