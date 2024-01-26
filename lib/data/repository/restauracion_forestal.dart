@@ -26,9 +26,8 @@ class RestuaracionForestalRepository extends RestauracionForestalBaseRepository{
   }
   
   @override
-  Future<void> update(RestauracionForestal restauracionForestal) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(RestauracionForestal restauracionForestal) async {
+    await _db.collection(_nameCollection).doc(restauracionForestal.id).update(RestauracionForestalDto.fromRestauracionForestal(restauracionForestal).toMap());
   }
 
 

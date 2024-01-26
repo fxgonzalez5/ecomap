@@ -11,14 +11,14 @@ class RadioListTileEntry<T> {
 class CustomRadioListTile<T> extends StatelessWidget {
   final String label;
   final List<RadioListTileEntry<T>> options;
-  final T groupValue;
+  final T? groupValue;
   final ValueChanged<T?> onChanged;
 
   const CustomRadioListTile({
     super.key,
     required this.label,
     required this.options,
-    required this.groupValue,
+    this.groupValue,
     required this.onChanged
   });
 

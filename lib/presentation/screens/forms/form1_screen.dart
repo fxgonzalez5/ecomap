@@ -1,8 +1,10 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 
 class Form1Screen extends StatelessWidget {
@@ -14,6 +16,7 @@ class Form1Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -26,17 +29,21 @@ class Form1Screen extends StatelessWidget {
               centerTitle: true,
               expandedTitleScale: 1,
               titlePadding: EdgeInsets.zero,
-              title: Head(title: 'Orgnización')
+              title: Head(title: 'Organización')
             ),
           ),
           SliverPadding(
             padding: EdgeInsets.symmetric(vertical: responsive.hp(2.5), horizontal: responsive.wp(5)),
             sliver: SliverList.list(
               children: [
-                const CustomDropdownButton(
+                CustomDropdownButton(
                   label: 'Tipo de Socio',
                   hintText: 'Seleccione una opción',
-                  options: [],
+                  options: [
+                    DropdownMenuEntry(value: 'Persona Natural', label: 'Persona Natural'),
+                    DropdownMenuEntry(value: 'Empresa', label: 'Empresa'),
+                  ],
+                  controller: socioProvider.tipoSocioController,
                 ),
                 CustomRadioListTile<String>(
                   label: 'Tipo de Capitulo',
@@ -44,8 +51,8 @@ class Form1Screen extends StatelessWidget {
                     RadioListTileEntry(title: 'Páramo', value: 'Páramo'),
                     RadioListTileEntry(title: 'Bosque', value: 'Bosque'),
                   ],
-                  groupValue: 'Páramo',
-                  onChanged: (value) {},
+                  groupValue: socioProvider.tipoCapitulo,
+                  onChanged: (value) => socioProvider.tipoCapitulo = value,
                 ),
                 Text('Datos generales', style: texts.titleLarge),
                 SizedBox(height: responsive.hp(2)),
@@ -54,33 +61,53 @@ class Form1Screen extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Número de RUC',
                           hintText: 'Ingrese el ruc',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.rucDatosGeneralesController,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Representante Legal',
                           hintText: 'Ingrese representante',
+                          controller: socioProvider.representanteDatosGeneralesControler,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Número de Registro de la Directiva',
                           hintText: 'Ingrese el número',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.registroDatosGeneralesController,
                         ),
-                        _FormDatePicker(
-                          onChanged: (value) {},
+                        CustomInputText(
+                          label: 'Fecha de Persona Jurídica',
+                          hintText: 'mm/dd/yyyy',
+                          keyboardType: TextInputType.none,
+                          controller: socioProvider.fechaPersonaJuidicaDatosGeneralesController,
+                          onTap: () async{
+                            final response = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate:DateTime(DateTime.now().year),
+                              lastDate: DateTime(DateTime.now().year + 1),
+                              cancelText: "Cancelar",
+                              confirmText: "Guardar"
+                            );
+                            socioProvider.fechaPersonaJuidicaDatosGenerales = response == null ? 
+                                null : 
+                                response.toString().split(' ')[0];
+                            socioProvider.fechaPersonaJuidicaDatosGeneralesController.text = socioProvider.fechaPersonaJuidicaDatosGenerales ?? '';
+                          },
                         ),
-                        const CustomDropdownButton(
-                          label: 'Cantón',
-                          hintText: 'Seleccione cantón',
-                          options: [],
-                        ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Etnia',
                           hintText: 'Ingrese Etnia',
+                          controller: socioProvider.etniaDatosGeneralesController,
                         ),
-                        const CustomRadioButton(label: '¿Los integrantes de la Organización viven en el predio?'),
+                        CustomRadioButton(
+                          label: '¿Los integrantes de la Organización viven en el predio?',
+                          groupValue:  socioProvider.vivenEnElPredioDatosGenerales,
+                          onChanged: (value) => socioProvider.vivenEnElPredioDatosGenerales = value,
+                        ),
                         FilledButton(
                           onPressed: () => context.pushNamed(Form2Screen.name),
                           child: const Text('Siguiente')

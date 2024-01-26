@@ -1,12 +1,13 @@
 
 class RestauracionForestal{
   String? id;
+  DateTime fechaRegistro;
   RestauracionBeneficiario beneficiario;
   RestauracionDetalle detalle;
   RestauracionUbicacion ubicacion;
   RestauracionPotenciacionViveros potenciacion;
 
-  RestauracionForestal({this.id, required this.beneficiario,required this.detalle, required this.ubicacion, required this.potenciacion});
+  RestauracionForestal({this.id, required this.fechaRegistro, required this.beneficiario,required this.detalle, required this.ubicacion, required this.potenciacion});
 }
 
 class RestauracionBeneficiario{

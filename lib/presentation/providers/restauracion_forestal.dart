@@ -1,14 +1,26 @@
+import 'dart:io';
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/screens/home/home_screen.dart';
+import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:open_file/open_file.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'dart:typed_data';
+import 'package:printing/printing.dart';
 
 class RestauracionForestalProvider with ChangeNotifier{
   final RestauracionForestalBaseRepository _restauracionForestalRepository;
   List<RestauracionForestal> _listRestauracion = List.empty();
-  List<RestauracionForestal> get listRestauracion => _listRestauracion;
-
+  List<RestauracionForestal> _listRestauracionFilter = List.empty();
+  List<RestauracionForestal> get listRestauracion => _listRestauracionFilter;
+  RestauracionForestal? _currentRestauracionForestal;
+  RestauracionForestal? get currentRestauracionForestal => _currentRestauracionForestal;
+  String? _pathPDF;
+  String? get pathPDF => _pathPDF;
 
   //Form
   final codigoFichaController = TextEditingController();
@@ -22,6 +34,7 @@ class RestauracionForestalProvider with ChangeNotifier{
   String? get provincia => _provincia;
   set provincia(String? value){
     _provincia = value;
+    notifyListeners();
   }
   final cantonController = TextEditingController();
   String? _canton = null;
@@ -53,21 +66,62 @@ class RestauracionForestalProvider with ChangeNotifier{
   Future<void> getAll() async{
     try {
       _listRestauracion = await _restauracionForestalRepository.getAll();
+      _listRestauracionFilter = _listRestauracion;
       notifyListeners();
     } catch (e) {
-      print('Error');
       debugPrint(e.toString());
     }finally{
       
     }
   }
 
+  navigateToEdit(BuildContext context, RestauracionForestal restauracion){
+    _currentRestauracionForestal = restauracion;
+    codigoFichaController.text = restauracion.beneficiario.codigoFicha ?? '';
+    cedulaController.text = restauracion.beneficiario.cedula ?? '';
+    nombreController.text = restauracion.beneficiario.nombre ?? '';
+    fechaController.text = restauracion.detalle.fechaLanzamiento == null ? '':restauracion.detalle.fechaLanzamiento.toString().split(' ')[0];
+    fechaLanzamiento = fechaController.text == '' ? null : fechaController.text;
+    equipoGPSController.text = restauracion.detalle.equipoGPS ?? '';
+    provincia = restauracion.ubicacion.provincia;
+    canton = restauracion.ubicacion.canton;
+    parroquia = restauracion.ubicacion.canton;
+    observacionesController.text = restauracion.ubicacion.observaciones ?? '';
+    cantidadController.text = restauracion.potenciacion.cantidad?.toString() ?? '';
+    actividadesController.text = restauracion.potenciacion.actividades ?? '';
+    provinciaController.text = restauracion.ubicacion.provincia ?? '';
+    provincia = restauracion.ubicacion.provincia;
+    cantonController.text = restauracion.ubicacion.canton ?? '';
+    canton = restauracion.ubicacion.canton;
+    parroquiaController.text = restauracion.ubicacion.parroquia ?? '';
+    parroquia = restauracion.ubicacion.parroquia;
+    context.pushNamed(FormRestauracionForestalBeneficiarioScreen.name);
+  }
+
+  navigateToReportDetalle(BuildContext context, RestauracionForestal restauracion){
+    _currentRestauracionForestal = restauracion;
+    context.pushNamed(ReportRestauracionForestalDetalleScreen.name);
+  }
+
+  restauracionFilter(String nombreBeneficiario){
+    _listRestauracionFilter = _listRestauracion.where((x) => x.beneficiario.nombre!.toLowerCase().contains(nombreBeneficiario.toLowerCase())).toList();
+    notifyListeners();
+  }
+
+  submitForm(BuildContext context){
+    if(_currentRestauracionForestal == null){
+      crear(context);
+    }else{
+      update(context);
+    }
+  }
+
   crear(BuildContext context) async{
     try {
-      
       isLoading = true;
       final currentPosition = await getLocation();
       final restauracion = RestauracionForestal(
+        fechaRegistro: DateTime.now().toUtc(),  
         beneficiario: RestauracionBeneficiario(
           codigoFicha: codigoFichaController.text.isEmpty ? null : codigoFichaController.text,
           cedula: cedulaController.text.isEmpty ? null : cedulaController.text,
@@ -75,12 +129,12 @@ class RestauracionForestalProvider with ChangeNotifier{
         ), 
         detalle: RestauracionDetalle(
           equipoGPS: equipoGPSController.text.isEmpty ? null : equipoGPSController.text,
-          fechaLanzamiento: fechaLanzamiento == null ? null : DateTime.parse(fechaLanzamiento!)
+          fechaLanzamiento: fechaLanzamiento == null ? null : DateTime.parse(fechaLanzamiento!).toUtc()
         ), 
         ubicacion: RestauracionUbicacion(
-          provincia: provincia ?? null,
-          canton: canton ?? null,
-          parroquia: parroquia ?? null,
+          provincia: provincia,
+          canton: canton,
+          parroquia: parroquia,
           latitud: currentPosition?.latitude,
           longitud: currentPosition?.longitude,
           observaciones: observacionesController.text.isEmpty ? null : observacionesController.text
@@ -94,6 +148,46 @@ class RestauracionForestalProvider with ChangeNotifier{
       );
       await _restauracionForestalRepository.create(restauracion);
       context.goNamed(HomeScreen.name);
+      context.pushNamed(VisualizationRestauracionForestalScreen.name);
+      cleanData();
+    } catch (e) {
+      debugPrint(e.toString());
+    }finally{
+      isLoading = false;
+    }
+  }
+
+  update(BuildContext context) async{
+    try {
+      isLoading = true;
+      final restauracion = RestauracionForestal(
+        id: _currentRestauracionForestal!.id,
+        fechaRegistro: _currentRestauracionForestal!.fechaRegistro,
+        beneficiario: RestauracionBeneficiario(
+          codigoFicha: codigoFichaController.text.isEmpty ? null : codigoFichaController.text,
+          cedula: cedulaController.text.isEmpty ? null : cedulaController.text,
+          nombre: nombreController.text.isEmpty ? null : nombreController.text,
+        ), 
+        detalle: RestauracionDetalle(
+          equipoGPS: equipoGPSController.text.isEmpty ? null : equipoGPSController.text,
+          fechaLanzamiento: fechaLanzamiento == null ? null : DateTime.parse(fechaLanzamiento!).toUtc()
+        ), 
+        ubicacion: RestauracionUbicacion(
+          provincia: provincia,
+          canton: canton,
+          parroquia: parroquia,
+          observaciones: observacionesController.text.isEmpty ? null : observacionesController.text
+
+        ), 
+        potenciacion: RestauracionPotenciacionViveros(
+          cantidad: cantidadController.text.isEmpty ? null : int.tryParse(cantidadController.text),
+          actividades: actividadesController.text.isEmpty ? null : actividadesController.text,
+          informeImagenURL: null
+        )
+      );
+      await _restauracionForestalRepository.update(restauracion);
+      context.goNamed(HomeScreen.name);
+      context.pushNamed(VisualizationRestauracionForestalScreen.name);
       cleanData();
     } catch (e) {
       debugPrint(e.toString());
@@ -142,5 +236,60 @@ class RestauracionForestalProvider with ChangeNotifier{
     observacionesController.clear();
     cantidadController.clear();
     actividadesController.clear();
+    _currentRestauracionForestal = null;
+  }
+
+  generateAndSavePDF(BuildContext context, Map<String, String> data) async {
+    final pdf = pw.Document();
+    final font = await PdfGoogleFonts.nunitoExtraLight();
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (context) => [
+          _buildTableRow("Nombre","Detalle",
+              color: PdfColors.blueGrey, 
+              font: font),
+          ...data.keys.map((x) => _buildTableRow(x,data[x].toString(),font: font)).toList()
+        ],
+      ),
+    );
+
+    final output = await getExternalStorageDirectory();
+    _pathPDF = "${output!.path}/reporte.pdf";
+    final file = File(_pathPDF!);
+    final path = await pdf.save();
+    await file.writeAsBytes(path);
+    await OpenFile.open(_pathPDF);
+  }
+
+  pw.Container _buildTableRow(String nombre, String detalle, {PdfColor? color, required pw.Font font}){
+
+    return pw.Container(
+      decoration: pw.BoxDecoration(
+        color: color,
+      ),
+      child: pw.Row(
+        children: [
+          pw.Expanded(
+            child: pw.Padding(
+              padding: pw.EdgeInsets.all(8.0),
+              child: pw.Text(
+                nombre,
+                style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
+              ),
+            ),
+          ),
+          pw.Expanded(
+            child: pw.Padding(
+              padding: pw.EdgeInsets.all(8.0),
+              child: pw.Text(
+                detalle,
+                style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
+              ),
+            ),
+          )
+        ]
+      ),
+    );
   }
 }

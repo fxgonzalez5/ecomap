@@ -1,8 +1,10 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 class Form7Screen extends StatelessWidget {
   static const String name = 'form7_screen';
@@ -13,6 +15,7 @@ class Form7Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,30 +41,31 @@ class Form7Screen extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        const CustomInputText(
-                          isMandatory: true,
+                        CustomInputText(
                           label: 'Número de Predio',
                           hintText: 'Ingrese el número del predio',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.numeroRP,
                         ),
-                        _FormDatePicker(
-                          title: 'Fecha',
-                          onChanged: (value) {},
-                        ),
-                        const CustomDropdownButton(
-                          label: 'Provincia',
-                          hintText: 'Seleccione Provincia',
-                          options: [],
-                        ),
-                        const CustomDropdownButton(
-                          label: 'Cantón',
-                          hintText: 'Seleccione Cantón',
-                          options: [],
-                        ),
-                        const CustomDropdownButton(
-                          label: 'Parroquia',
-                          hintText: 'Seleccione Parroquia',
-                          options: [],
+                        CustomInputText(
+                          label: 'Fecha',
+                          hintText: 'mm/dd/yyyy',
+                          keyboardType: TextInputType.none,
+                          controller: socioProvider.fechaRPController,
+                          onTap: () async{
+                            final response = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate:DateTime(DateTime.now().year),
+                              lastDate: DateTime(DateTime.now().year + 1),
+                              cancelText: "Cancelar",
+                              confirmText: "Guardar"
+                            );
+                            socioProvider.fechaRP = response == null ? 
+                                null : 
+                                response.toString().split(' ')[0];
+                            socioProvider.fechaRPController.text = socioProvider.fechaRP ?? '';
+                          },
                         ),
                       ],
                     ),
@@ -75,24 +79,40 @@ class Form7Screen extends StatelessWidget {
                     children: [
                       CustomRadioButton(
                         label: 'Forma de Adquisición',
-                        groupValue: 'Adjudicación',
+                        groupValue: socioProvider.formaAP,
                         values: const ['Adjudicación', 'Compra-Venta'],
                         titles: const ['Adjudicación', 'Compra-Venta'],
-                        onChanged: (value) {},
+                        onChanged: (value) => socioProvider.formaAP = value,
                       ),
-                      _FormDatePicker(
-                        title: 'Fecha de Adquisión',
-                        onChanged: (value) {},
-                      ),
-                      const CustomDropdownButton(
+                      CustomInputText(
+                          label: 'Fecha de adquisición',
+                          hintText: 'mm/dd/yyyy',
+                          keyboardType: TextInputType.none,
+                          controller: socioProvider.fechaAPController,
+                          onTap: () async{
+                            final response = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate:DateTime(DateTime.now().year),
+                              lastDate: DateTime(DateTime.now().year + 1),
+                              cancelText: "Cancelar",
+                              confirmText: "Guardar"
+                            );
+                            socioProvider.fechaAP = response == null ? 
+                                null : 
+                                response.toString().split(' ')[0];
+                            socioProvider.fechaAPController.text = socioProvider.fechaAP ?? '';
+                          },
+                        ),
+                      CustomInputText(
                         label: 'Institución que Adjudica las Tierras',
-                        hintText: 'Seleccione institución',
-                        options: [],
+                        hintText: 'Ingrese la institución',
+                        controller: socioProvider.institucionAPController,
                       ),
-                      const CustomInputText(
-                        label: 'Observaciones sobre la adquisición del predio',
+                      CustomInputText(
+                        label: 'Observaciones',
                         hintText: 'Observaciones',
-                        keyboardType: TextInputType.number,
+                        controller: socioProvider.observacionesAPContoller,
                       ),
                       FilledButton(
                         onPressed: () => context.pushNamed(Form8Screen.name),

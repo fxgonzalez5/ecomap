@@ -62,10 +62,10 @@ class _PotenciacionScreenState extends State<FormRestauracionForestalPotenciacio
                         // Text('Informe de actividades', style: texts.titleLarge),
                         // SizedBox(height: 15,),
                         FilledButton(
-                          onPressed: restauracionProvider.isLoading ? null :  ()=> restauracionProvider.crear(context),
+                          onPressed: restauracionProvider.isLoading ? null :  ()=> restauracionProvider.submitForm(context),
                           child:  restauracionProvider.isLoading ? 
                             const CircularProgressIndicator(color: Colors.grey, strokeCap: StrokeCap.round) :
-                            const Text('Guardar')
+                            Text(restauracionProvider.currentRestauracionForestal != null ? 'Actualizar':'Guardar')
                         )
                       ],
                     ),

@@ -1,5 +1,6 @@
 import 'package:ecomap/config/helpers/helpers.dart';
 import 'package:ecomap/domain/domain.dart';
+import 'package:ecomap/presentation/screens/auth/check_auth_screen.dart';
 import 'package:ecomap/presentation/screens/auth/verification_screen.dart';
 import 'package:ecomap/presentation/screens/home/home_screen.dart';
 import 'package:ecomap/presentation/services/firebase_auth_service.dart';
@@ -37,7 +38,7 @@ class AuthProvider extends ChangeNotifier {
       case 'success':
         final user = await _firebaseAuthService.getUserByEmail(email.trim());
         currentUser = user;
-        Future.microtask(() => context.pushNamed(HomeScreen.name));
+        Future.microtask(() => context.pushReplacementNamed(CheckAuthScreen.name));
         isLoading = false;
         break;
       case null:

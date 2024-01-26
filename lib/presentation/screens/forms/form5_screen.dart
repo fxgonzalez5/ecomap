@@ -1,19 +1,26 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-
-class Form5Screen extends StatelessWidget {
+class Form5Screen extends StatefulWidget {
   static const String name = 'form5_screen';
-
+  
   const Form5Screen({super.key});
 
+  @override
+  _Form5ScreenState createState() => _Form5ScreenState();
+}
+
+class _Form5ScreenState extends State<Form5Screen> {
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -39,27 +46,30 @@ class Form5Screen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
                   child: Column(
                     children: [
-                      const CustomInputText(
+                      CustomInputText(
                         label: 'Nombre Actvidad',
                         hintText: 'Ingrese nombre',
+                        controller: socioProvider.nombreActividad,
                       ),
-                      const CustomInputText(
+                      CustomInputText(
                         label: 'Descripción',
                         hintText: 'Ingrese una breve descripción',
+                        controller: socioProvider.descripcionActividad,
                       ),
                       FilledButton.tonal(
                         style: ButtonStyle(
                           fixedSize: const MaterialStatePropertyAll(Size.infinite),
                           padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: responsive.wp(10)))
                         ),
-                        onPressed: () {},
+                        onPressed: () => socioProvider.agregarActidad(),
                         child: const Text('Agregar')
                       ),
                       SizedBox(height: responsive.hp(3.5)),
-                      const CustomInputText(
-                        label: 'Valor Promedio de Ingresos Familiares (\$/mes)',
+                      CustomInputText(
+                        label: 'Promedio de Ingresos (\$/mes)',
                         hintText: 'Ingrese un monto',
                         keyboardType: TextInputType.number,
+                        controller: socioProvider.promedioIngresoSE,
                       ),
                     ],
                   ),
@@ -71,37 +81,18 @@ class Form5Screen extends StatelessWidget {
                     children: [
                       Container(
                         height: responsive.hp(24),
-                        margin: EdgeInsets.only(top: responsive.hp(2), bottom: responsive.hp(3.5)),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: 8,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Row(
-                              children: [
-                                Text('Actividad $index', style: texts.bodyLarge,),
-                                const Spacer(),
-                                FilledButton.tonal(
-                                  style: const ButtonStyle(
-                                    fixedSize: MaterialStatePropertyAll(Size.infinite),
-                                    textStyle: MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Editar')
-                                ),
-                                SizedBox(width: responsive.wp(5)),
-                                FilledButton.tonal(
-                                  style: ButtonStyle(
-                                    fixedSize: const MaterialStatePropertyAll(Size.infinite),
-                                    backgroundColor: MaterialStatePropertyAll(Colors.red.shade100),
-                                    textStyle: const MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Eliminar')
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                        margin: EdgeInsets.only(top: responsive.hp(2), bottom: responsive.hp(1.5)),
+                        child: ListView(
+                          children: socioProvider.actividadesSE.map((x) => ListTile(
+                            title: Text('OK', style: texts.bodyLarge,),
+                            subtitle: Text('Descripcion', style: texts.bodyMedium,),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete,),
+                              onPressed: ()=> socioProvider.eliminarActividad(x),
+                            ),
+                          ))
+                          .toList()
+                        )
                       ),
                       FilledButton(
                         onPressed: () => context.pushNamed(Form6Screen.name),

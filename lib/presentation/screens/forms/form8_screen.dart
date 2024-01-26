@@ -1,8 +1,10 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 class Form8Screen extends StatelessWidget {
   static const String name = 'form8_screen';
@@ -13,6 +15,7 @@ class Form8Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Scaffold(
       body: CustomScrollView(

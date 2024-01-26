@@ -31,7 +31,7 @@ class CustomRadioButton<T> extends StatelessWidget {
           children: [
             Radio(
               value: values?.first ?? true,
-              groupValue: groupValue ?? true,
+              groupValue: groupValue,
               onChanged: (value) {
                 if (onChanged != null) {
                   onChanged!(value as T);

@@ -1,8 +1,10 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 
 class Form2Screen extends StatelessWidget {
@@ -14,6 +16,8 @@ class Form2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
+    final generalProvider = context.watch<GeneralProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -26,7 +30,7 @@ class Form2Screen extends StatelessWidget {
               centerTitle: true,
               expandedTitleScale: 1,
               titlePadding: EdgeInsets.zero,
-              title: Head(title: 'Orgnización')
+              title: Head(title: 'Organización')
             ),
           ),
           SliverPadding(
@@ -40,43 +44,78 @@ class Form2Screen extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Dirección',
                           hintText: 'Ingrese dirección',
+                          controller: socioProvider.direccionNotificacionController,
                         ),
-                        const CustomDropdownButton(
+                        CustomDropdownButton(
                           label: 'Provincia',
                           hintText: 'Seleccione provincia',
-                          options: [],
+                          controller: socioProvider.provinciaNotificacionController,
+                          options: generalProvider
+                            .getProvincias()
+                            .map((x) => DropdownMenuEntry(value: x['value'], label: x['label'] as String))
+                            .toList(),
+                          onSelected: (value){
+                            socioProvider.provincia = value;
+                            socioProvider.canton = null;
+                            socioProvider.parroquia = null;
+                            socioProvider.cantonNotificacionController.clear();
+                            socioProvider.parroquiaNotificacionController.clear();
+                          },
+                          initialSelection: socioProvider.provincia,
                         ),
-                        const CustomDropdownButton(
+                        CustomDropdownButton(
                           label: 'Cantón',
                           hintText: 'Seleccione cantón',
-                          options: [],
+                          controller: socioProvider.cantonNotificacionController,
+                          options:generalProvider
+                            .getCantones(socioProvider.provincia)
+                            .map((x) => DropdownMenuEntry(value: x['value'], label: x['label'] as String))
+                            .toList(),
+                          onSelected: (value){
+                            socioProvider.canton = value;
+                            socioProvider.parroquia = null;
+                            socioProvider.parroquiaNotificacionController.clear();
+                          },
+                          initialSelection: socioProvider.canton,
                         ),
-                        const CustomDropdownButton(
+                        CustomDropdownButton(
                           label: 'Parroquia',
                           hintText: 'Seleccione parroquia',
-                          options: [],
+                          controller: socioProvider.parroquiaNotificacionController,
+                          options: generalProvider
+                            .getParroquias(socioProvider.provincia, socioProvider.canton)
+                            .map((x) => DropdownMenuEntry(value: x['value'], label: x['label'] as String))
+                            .toList(),
+                          onSelected: (value){
+                            socioProvider.parroquia = value;
+                          },
+                          initialSelection: socioProvider.parroquia,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Comunidad',
                           hintText: 'Ingrese la comunidad',
+                          controller: socioProvider.comunidadNotificacionController,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Teléfono Convencional',
                           hintText: 'Ingrese número de teléfono',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.convencionalNotificacionController,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Teléfono Celular',
                           hintText: 'Ingrese número celular',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.celularNotificacionController,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Correo Electrónico',
                           hintText: 'Ingrese correo',
                           keyboardType: TextInputType.emailAddress,
+                          controller: socioProvider.emailNotificacionController,
                         ),
                         FilledButton(
                           onPressed: () => context.pushNamed(Form3Screen.name),

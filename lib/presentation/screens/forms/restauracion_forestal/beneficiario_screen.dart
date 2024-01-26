@@ -7,9 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class FormRestauracionForestalBeneficiarioScreen extends StatelessWidget {
+class FormRestauracionForestalBeneficiarioScreen extends StatefulWidget {
   static const String name = 'form_restauracion_forestal_beneficiario_screen';
-  const FormRestauracionForestalBeneficiarioScreen({ super.key });
+  FormRestauracionForestalBeneficiarioScreen({ super.key });
+
+  @override
+  _BeneficiarioScreenState createState() => _BeneficiarioScreenState();
+}
+
+class _BeneficiarioScreenState extends State<FormRestauracionForestalBeneficiarioScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context){
@@ -104,3 +115,10 @@ class FormRestauracionForestalBeneficiarioScreen extends StatelessWidget {
     );
   }
 }
+/*
+class FormRestauracionForestalBeneficiarioScreen extends StatelessWidget {
+  static const String name = 'form_restauracion_forestal_beneficiario_screen';
+  const FormRestauracionForestalBeneficiarioScreen({ super.key });
+
+  
+}*/

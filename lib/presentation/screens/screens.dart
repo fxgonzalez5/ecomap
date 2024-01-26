@@ -17,3 +17,5 @@ export 'package:ecomap/presentation/screens/forms/restauracion_forestal/benefici
 export 'package:ecomap/presentation/screens/forms/restauracion_forestal/ubicacion_screen.dart';
 export 'package:ecomap/presentation/screens/forms/restauracion_forestal/potenciacion_screen.dart';
 export 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
+export 'package:ecomap/presentation/screens/reports/restauracion_forestal.dart';
+export 'package:ecomap/presentation/screens/reports/restauracion_forestal_detalle.dart';

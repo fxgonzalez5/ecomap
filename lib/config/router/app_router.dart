@@ -101,5 +101,15 @@ final appRouter = GoRouter(
       name: VisualizationRestauracionForestalScreen.name,
       builder: (context, state) => VisualizationRestauracionForestalScreen(),
     ),
+    GoRoute(
+      path: '/report-restauracion-forestal',
+      name: ReportRestauracionForestalScreen.name,
+      builder: (context, state) => ReportRestauracionForestalScreen(),
+    ),
+    GoRoute(
+      path: '/report-restauracion-forestal-detalle',
+      name: ReportRestauracionForestalDetalleScreen.name,
+      builder: (context, state) => ReportRestauracionForestalDetalleScreen(),
+    ),
   ],
 );

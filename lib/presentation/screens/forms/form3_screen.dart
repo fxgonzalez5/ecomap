@@ -1,8 +1,10 @@
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 
 class Form3Screen extends StatelessWidget {
@@ -14,6 +16,8 @@ class Form3Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
+    final generalProvider = context.watch<GeneralProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,21 +42,24 @@ class Form3Screen extends StatelessWidget {
                 SizedBox(height: responsive.hp(2)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
-                  child: const Form(
+                  child: Form(
                     child: Column(
                       children: [
                         CustomInputText(
                           label: 'Nombre',
                           hintText: 'Ingrese el nombre',
+                          controller: socioProvider.nombreContactoController,
                         ),
                         CustomInputText(
                           label: 'Cargo en la organización',
                           hintText: 'Ingrese el cargo',
+                          controller: socioProvider.cargoContactoController,
                         ),
                         CustomInputText(
                           label: 'Teléfono',
                           hintText: 'Ingrese el teléfono',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.telefonoContactoController,
                         ),
                       ],
                     ),
@@ -69,18 +76,27 @@ class Form3Screen extends StatelessWidget {
                           label: 'Tipo de Cuenta',
                           titles: const ['Ahorro', 'Corriente'],
                           values: const ['Ahorro', 'Corriente'],
-                          groupValue: 'Ahorro',
-                          onChanged: (value) {},
+                          groupValue: socioProvider.tipoCuenta,
+                          onChanged: (value) => socioProvider.tipoCuenta = value,
                         ),
-                        const CustomDropdownButton(
+                        CustomDropdownButton(
                           label: 'Institución Financiera',
                           hintText: 'Seleccione banco',
-                          options: [],
+                          controller: socioProvider.institucionCuentaController,
+                          options: generalProvider
+                            .bancos
+                            .map((x) => DropdownMenuEntry(value: x, label: x))
+                            .toList(),
+                          onSelected: (value){
+                            socioProvider.institucionCuenta = value;
+                          },
+                          initialSelection: socioProvider.institucionCuenta,
                         ),
-                        const CustomInputText(
+                        CustomInputText(
                           label: 'Número de cuenta',
                           hintText: 'Ingrese número de cuenta',
                           keyboardType: TextInputType.number,
+                          controller: socioProvider.numeroCuentaController,
                         ),
                         FilledButton(
                           onPressed: () => context.pushNamed(Form4Screen.name),

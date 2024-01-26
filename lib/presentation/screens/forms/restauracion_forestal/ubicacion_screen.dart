@@ -63,6 +63,7 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
                             restauracionProvider.cantonController.clear();
                             restauracionProvider.parroquiaController.clear();
                           },
+                          initialSelection: restauracionProvider.provincia,
                         ),
                         CustomDropdownButton(
                           label: 'Cantón',
@@ -76,7 +77,8 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
                             restauracionProvider.canton = value;
                             restauracionProvider.parroquia = null;
                             restauracionProvider.parroquiaController.clear();
-                          }
+                          },
+                          initialSelection: restauracionProvider.canton,
                         ),
                         CustomDropdownButton(
                           label: 'Parroquia',
@@ -88,7 +90,8 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
                             .toList(),
                           onSelected: (value){
                             restauracionProvider.parroquia = value;
-                          }
+                          },
+                          initialSelection: restauracionProvider.parroquia,
                         ),
                         CustomInputText(
                           label: 'Observaciones',

@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 
 class GeneralProvider with ChangeNotifier{
   Map<String, dynamic> provincias = {};
+  Map<String, dynamic> _bancos = {};
+  List<dynamic> get bancos => _bancos['instituciones'] as List<dynamic>;
   final ProvinciaBaseRepository _provinciasRepository;
+  final BancosBaseRepository _bancoRepository;
 
-  GeneralProvider(this._provinciasRepository);
+  GeneralProvider(this._provinciasRepository, this._bancoRepository);
 
   getAllJsonProvincias() async{
     provincias = await _provinciasRepository.getAll();
+  }
+
+  getAllJsonInstitucionesBancarias() async{
+    _bancos = await _bancoRepository.getAll();
   }
 
   List<Map<String,String>> getProvincias(){

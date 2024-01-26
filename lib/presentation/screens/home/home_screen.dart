@@ -1,5 +1,6 @@
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/providers/auth_provider.dart';
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
@@ -94,7 +95,7 @@ class _HomeView extends StatelessWidget {
                 child: _CustomCard(
                   text: 'Reportes',
                   imagePath: 'assets/images/card2.png',
-                  onTap: () => print('click'), // TODO: Navegar a la pantalla correspondiente
+                  onTap: () => navigateReport(context, authProvider.currentUser!.project),
                 ),
               ),
               const Spacer(flex: 2,),
@@ -107,13 +108,24 @@ class _HomeView extends StatelessWidget {
 
   navigateRegisterForm(BuildContext context, String project){
     if(Projects.restauracionForestal.name == project){
+      context.read<RestauracionForestalProvider>().cleanData();
       return context.pushNamed(FormRestauracionForestalBeneficiarioScreen.name);
+    }
+    if(Projects.socioBosque.name == project){
+      context.read<SocioBosqueProvider>().cleanData();
+      return context.pushNamed(Form1Screen.name);
     }
   }
 
   navigateVisualization(BuildContext context, String project){
     if(Projects.restauracionForestal.name == project){
       return context.pushNamed(VisualizationRestauracionForestalScreen.name);
+    }
+  }
+
+  navigateReport(BuildContext context, String project){
+    if(Projects.restauracionForestal.name == project){
+      return context.pushNamed(ReportRestauracionForestalScreen.name);
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:ecomap/domain/domain.dart';
 
 class RestauracionForestalDto{
   String? id;
+  DateTime fechaRegistro;
   String? codigoFicha;
   String? cedulaBeneficiario;
   String? nombreBeneficiario;
@@ -21,6 +22,7 @@ class RestauracionForestalDto{
 
   RestauracionForestalDto({
     this.id, 
+    required this.fechaRegistro,
     this.codigoFicha,
     this.cedulaBeneficiario,
     this.nombreBeneficiario,
@@ -40,6 +42,7 @@ class RestauracionForestalDto{
   factory RestauracionForestalDto.fromMap(Map<String, dynamic> json){
     return RestauracionForestalDto(
       id: json['id'],
+      fechaRegistro: (json['fechaRegistro'] as Timestamp).toDate().toLocal(),
       codigoFicha: json['beneficiario']['codigoFicha'],
       cedulaBeneficiario: json['beneficiario']['cedula'],
       nombreBeneficiario: json['beneficiario']['nombre'],
@@ -60,6 +63,7 @@ class RestauracionForestalDto{
   factory RestauracionForestalDto.fromRestauracionForestal(RestauracionForestal restauracionForestal){
     return RestauracionForestalDto(
       id: restauracionForestal.id, 
+      fechaRegistro: restauracionForestal.fechaRegistro,
       codigoFicha: restauracionForestal.beneficiario.codigoFicha,
       cedulaBeneficiario: restauracionForestal.beneficiario.cedula,
       nombreBeneficiario: restauracionForestal.beneficiario.nombre,
@@ -80,7 +84,8 @@ class RestauracionForestalDto{
   RestauracionForestal toRestauracionForestal(){
     return RestauracionForestal(
       id: id!, 
-      beneficiario: RestauracionBeneficiario(cedula: cedulaBeneficiario, codigoFicha: codigoFicha), 
+      fechaRegistro: fechaRegistro,
+      beneficiario: RestauracionBeneficiario(cedula: cedulaBeneficiario, codigoFicha: codigoFicha, nombre: nombreBeneficiario), 
       detalle: RestauracionDetalle(equipoGPS: equipoGPS, fechaLanzamiento: fechaLanzamiento), 
       ubicacion: RestauracionUbicacion(
         provincia: provincia,
@@ -96,6 +101,7 @@ class RestauracionForestalDto{
 
   Map<String,dynamic> toMap(){
     return <String, dynamic>{
+      'fechaRegistro': fechaRegistro,
       'beneficiario':{
         'codigoFicha': codigoFicha,
         'cedula': cedulaBeneficiario,
@@ -106,7 +112,7 @@ class RestauracionForestalDto{
         'equipoGPS': equipoGPS
       },
       'ubicacion': {
-        'ptovincia': provincia,
+        'provincia': provincia,
         'canton': canton,
         'parroquia': parroquia,
         'latitud': latitud,
