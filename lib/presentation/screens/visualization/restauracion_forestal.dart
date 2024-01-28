@@ -18,13 +18,7 @@ class VisualizationRestauracionForestalScreen extends StatefulWidget {
 }
 
 class _RestauracionForestalState extends State<VisualizationRestauracionForestalScreen> {
-  
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<RestauracionForestalProvider>(context, listen: false).getAll();
-  }
-  
+    
   
   @override
   Widget build(BuildContext context) {

@@ -51,9 +51,17 @@ class SocioBosqueDto{
   DateTime? fechaAP;
   String? institucionAP;
   String? observacionesAP;
+  bool? poseeGravamen;
+  String? tipoGravamen;
+  String? institucionGravamen;
+  bool? hipotecaGravamen;
+  List<SocioSuelo> suelos;
+  bool? cerramiento;
+  String? croquisURL;
+  bool? declaracion;
 
   SocioBosqueDto({
-    id,
+    this.id,
     required this.fechaRegistro,
     this.tipoSocio,
     this.tipoCapitulo,
@@ -101,6 +109,14 @@ class SocioBosqueDto{
     this.fechaAP,
     this.institucionAP,
     this.observacionesAP,
+    this.poseeGravamen,
+    this.tipoGravamen,
+    this.institucionGravamen,
+    this.hipotecaGravamen,
+    required this.suelos,
+    this.cerramiento,
+    this.croquisURL,
+    this.declaracion
   });
 
   factory SocioBosqueDto.fromMap(Map<String, dynamic> json){
@@ -137,7 +153,7 @@ class SocioBosqueDto{
       discapacitadosSE: json['socioEconomico']['discapacitados'],
       cantidadDiscapacidadosSE: json['socioEconomico']['cantidadDiscapacitados'],
       promedioIngresoSE: json['socioEconomico']['promedioIngreso'],
-      actividadesSE: (json['socioEconomico']['activiades'] as List<Map<String, dynamic>>)
+      actividadesSE: (json['socioEconomico']['actividades'] as List<dynamic>)
         .map((x) => SocioActividad(nombre: x['nombre'], descripcion: x['descripcion'])).toList(),
       latitudUbicacion: json['ubicacion']['latitud'],
       longitudUbicacion: json['ubicacion']['longitud'],
@@ -153,6 +169,15 @@ class SocioBosqueDto{
       fechaRP: json['registroPropiedad']['fecha'] == null ? null : (json['registroPropiedad']['fecha'] as Timestamp).toDate().toLocal(),
       institucionAP: json['adquisicionPredio']['institucion'],
       observacionesAP: json['adquisicionPredio']['observaciones'],
+      poseeGravamen: json['gravamen']['posee'],
+      tipoGravamen: json['gravamen']['tipo'],
+      institucionGravamen: json['gravamen']['institucion'],
+      hipotecaGravamen: json['gravamen']['hipoteca'],
+      suelos: (json['adicionales']['suelos'] as List<dynamic>)
+        .map((x) => SocioSuelo(tipo: x['tipo'], superficie: x['superficie'])).toList(),
+      cerramiento: json['adicionales']['cerramiento'],
+      croquisURL: json['adicionales']['croquisURL'],
+      declaracion: json['adicionales']['declaracion'],
     );
   }
 
@@ -205,6 +230,14 @@ class SocioBosqueDto{
       fechaRP: socioBosque.adquisicionPredio.fecha,
       institucionAP: socioBosque.adquisicionPredio.institucion,
       observacionesAP: socioBosque.adquisicionPredio.observaciones,
+      poseeGravamen: socioBosque.gravamen.poseeGravamen,
+      tipoGravamen: socioBosque.gravamen.tipo,
+      institucionGravamen: socioBosque.gravamen.institucion,
+      hipotecaGravamen: socioBosque.gravamen.hipoteca,
+      suelos: socioBosque.adicionales.suelos,
+      cerramiento: socioBosque.adicionales.cerramiento,
+      croquisURL: socioBosque.adicionales.croquisURL,
+      declaracion: socioBosque.adicionales.declaracion
     );
   }
 
@@ -276,6 +309,18 @@ class SocioBosqueDto{
         institucion: institucionAP,
         observaciones: observacionesAP
       ),
+      gravamen: SocioGravamen(
+        poseeGravamen: poseeGravamen,
+        tipo: tipoGravamen,
+        institucion: institucionGravamen,
+        hipoteca: hipotecaGravamen
+      ),
+      adicionales: SocioAdicionales(
+        suelos: suelos,
+        cerramiento: cerramiento,
+        croquisURL: croquisURL,
+        declaracion: declaracion
+      )
     );
   }
 
@@ -345,6 +390,18 @@ class SocioBosqueDto{
         'fecha': fechaAP,
         'institucion': institucionAP,
         'observaciones': observacionesAP
+      },
+      'gravamen':{
+        'posee': poseeGravamen,
+        'tipo': tipoGravamen,
+        'institucion': institucionGravamen,
+        'hipoteca': hipotecaGravamen
+      },
+      'adicionales':{
+        'suelos':  suelos.map((x) => {'tipo': x.tipo, 'superficie': x.superficie}).toList(),
+        'cerramiento': cerramiento,
+        'croquisURL': croquisURL,
+        'declaracion': declaracion
       }
     };
   }

@@ -34,46 +34,26 @@ class Form8Screen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: responsive.hp(2.5), horizontal: responsive.wp(5)),
             sliver: SliverList.list(
               children: [
-                Text('Escritura del predio', style: texts.titleLarge),
-                SizedBox(height: responsive.hp(2)),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
-                  child: const Column(
-                    children: [
-                      CustomDropdownButton(
-                        label: 'Provincia',
-                        hintText: 'Seleccione Provincia',
-                        options: [],
-                      ),
-                      CustomDropdownButton(
-                        label: 'Cantón',
-                        hintText: 'Seleccione Cantón',
-                        options: [],
-                      ),
-                      CustomDropdownButton(
-                        label: 'Parroquia',
-                        hintText: 'Seleccione Parroquia',
-                        options: [],
-                      ),
-                    ],
-                  ),
-                ),
                 Text('Gravamen', style: texts.titleLarge),
                 SizedBox(height: responsive.hp(2)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      CustomRadioButton(label: '¿El predio posee gravamen?'),
+                      CustomRadioButton(
+                        label: '¿El predio posee gravamen?',
+                        groupValue: socioProvider.poseeGravamen,
+                        onChanged: (value) => socioProvider.poseeGravamen = value,    
+                      ),
                       CustomInputText(
                         label: 'Tipo de gravamen',
                         hintText: 'Ingrese tipo de gravamen',
-                        keyboardType: TextInputType.number,
+                        controller: socioProvider.tipoGravamenController,
                       ),
                       CustomInputText(
                         label: 'Institución gravamen',
                         hintText: 'Ingrese institución gravamen',
-                        keyboardType: TextInputType.number,
+                        controller: socioProvider.institucionGravamenController,
                       ),
                     ],
                   ),
@@ -84,7 +64,11 @@ class Form8Screen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
                   child: Column(
                     children: [
-                      const CustomRadioButton(label: '¿El predio posee hipotecas?'),
+                      CustomRadioButton(
+                        label: '¿El predio posee hipotecas?',
+                        groupValue: socioProvider.hipotecaGravamen,
+                        onChanged: (value) => socioProvider.hipotecaGravamen = value,  
+                      ),
                       FilledButton(
                         onPressed: () => context.pushNamed(Form9Screen.name),
                         child: const Text('Siguiente'),

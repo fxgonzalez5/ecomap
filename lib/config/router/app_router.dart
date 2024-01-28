@@ -1,5 +1,8 @@
+import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
+import 'package:ecomap/presentation/screens/reports/socio_bosque_detalle.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
+import 'package:ecomap/presentation/screens/visualization/socio_bosque.dart';
 import 'package:go_router/go_router.dart';
 
 //* GoRouter configuration
@@ -110,6 +113,21 @@ final appRouter = GoRouter(
       path: '/report-restauracion-forestal-detalle',
       name: ReportRestauracionForestalDetalleScreen.name,
       builder: (context, state) => ReportRestauracionForestalDetalleScreen(),
+    ),
+    GoRoute(
+      path: '/visualization-socio-bosque',
+      name: VisualizationSocioBosqueScreen.name,
+      builder: (context, state) => VisualizationSocioBosqueScreen(),
+    ),
+    GoRoute(
+      path: '/report-socio-bosque',
+      name: ReportSocioBosqueScreen.name,
+      builder: (context, state) => ReportSocioBosqueScreen(),
+    ),
+    GoRoute(
+      path: '/report-socio-bosque-detalle',
+      name: ReportSocioBosqueDetalleScreen.name,
+      builder: (context, state) => ReportSocioBosqueDetalleScreen(),
     ),
   ],
 );

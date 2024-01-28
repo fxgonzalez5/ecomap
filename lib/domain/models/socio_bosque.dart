@@ -13,6 +13,8 @@ class SocioBosque{
   SocioLinderoPredio linderoPredio;
   SocioRegistroPropiedad registroPropiedad;
   SocioAdquisicionPredio adquisicionPredio;
+  SocioGravamen gravamen;
+  SocioAdicionales adicionales;
 
   SocioBosque({
     this.id,
@@ -28,6 +30,8 @@ class SocioBosque{
     required this.linderoPredio,
     required this.registroPropiedad,
     required this.adquisicionPredio,
+    required this.gravamen,
+    required this.adicionales
   });
 }
 
@@ -186,12 +190,27 @@ class SocioGravamen{
   String? tipo;
   String? institucion;
   bool? hipoteca;
+
+  SocioGravamen({
+    this.poseeGravamen,
+    this.tipo,
+    this.institucion,
+    this.hipoteca
+  });
 }
 
 class SocioAdicionales{
+  List<SocioSuelo> suelos;
+  bool? cerramiento;
+  String? croquisURL;
+  bool? declaracion;
 
+  SocioAdicionales({required this.suelos, this.cerramiento, this.croquisURL, this.declaracion});
 }
 
 class SocioSuelo{
-  
+  String? tipo;
+  String? superficie;
+
+  SocioSuelo({this.tipo, this.superficie});
 }

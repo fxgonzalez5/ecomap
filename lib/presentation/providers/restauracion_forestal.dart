@@ -104,7 +104,11 @@ class RestauracionForestalProvider with ChangeNotifier{
   }
 
   restauracionFilter(String nombreBeneficiario){
-    _listRestauracionFilter = _listRestauracion.where((x) => x.beneficiario.nombre!.toLowerCase().contains(nombreBeneficiario.toLowerCase())).toList();
+    if(nombreBeneficiario.isEmpty){
+      _listRestauracionFilter = _listRestauracion;
+    }else{
+      _listRestauracionFilter = _listRestauracion.where((x) => x.beneficiario.nombre != null && x.beneficiario.nombre!.toLowerCase().contains(nombreBeneficiario.toLowerCase())).toList();
+    }
     notifyListeners();
   }
 

@@ -1,7 +1,9 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 
 class Form9Screen extends StatelessWidget {
@@ -13,6 +15,7 @@ class Form9Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,20 +41,22 @@ class Form9Screen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
                   child: Column(
                     children: [
-                      const CustomInputText(
+                      CustomInputText(
                         label: 'Tipo de Uso de Suelo',
                         hintText: 'Ingrese nombre',
+                        controller: socioProvider.tipoSuelo,
                       ),
-                      const CustomInputText(
+                      CustomInputText(
                         label: 'Superficie (Ha)',
                         hintText: 'Ingrese superficie',
+                        controller: socioProvider.superficieSuelo,
                       ),
                       FilledButton.tonal(
                         style: ButtonStyle(
                           fixedSize: const MaterialStatePropertyAll(Size.infinite),
                           padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: responsive.wp(10)))
                         ),
-                        onPressed: () {},
+                        onPressed: () => socioProvider.agregarSuelo(),
                         child: const Text('Agregar')
                       ),
                       SizedBox(height: responsive.hp(3.5)),
@@ -64,47 +69,37 @@ class Form9Screen extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        height: responsive.hp(14),
+                        height: responsive.hp(24),
                         margin: EdgeInsets.only(top: responsive.hp(2), bottom: responsive.hp(3.5)),
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Row(
-                              children: [
-                                Text('Uso de suelo $index', style: texts.bodyLarge,),
-                                const Spacer(),
-                                FilledButton.tonal(
-                                  style: const ButtonStyle(
-                                    fixedSize: MaterialStatePropertyAll(Size.infinite),
-                                    textStyle: MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))
+                        child: ListView(
+                          children: socioProvider.suelos.map((x) => 
+                            Card(
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: ListTile(
+                                  title: Text(x.tipo ?? '--', style: texts.bodyLarge,),
+                                  subtitle: Text(x.superficie ?? '--', style: texts.bodyMedium,),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete,),
+                                    onPressed: ()=> socioProvider.eliminarSuelo(x),
                                   ),
-                                  onPressed: () {},
-                                  child: const Text('Editar')
                                 ),
-                                SizedBox(width: responsive.wp(5)),
-                                FilledButton.tonal(
-                                  style: ButtonStyle(
-                                    fixedSize: const MaterialStatePropertyAll(Size.infinite),
-                                    backgroundColor: MaterialStatePropertyAll(Colors.red.shade100),
-                                    textStyle: const MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Eliminar')
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                              ),
+                            ))
+                          .toList()
+                        )
                       ),
                     ],
                   ),
                 ), 
-                Text('Lista de Usos del Suelo', style: texts.titleLarge),
                 SizedBox(height: responsive.hp(2)),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
-                  child: const CustomRadioButton(label: '¿El predio cuenta con cerramiento?'),
+                  child: CustomRadioButton(
+                    label: '¿El predio cuenta con cerramiento?',
+                    groupValue: socioProvider.cerramiento,
+                    onChanged: (value) => socioProvider.cerramiento = value,  
+                  ),
                 ),
                 Text('Croquis del predio', style: texts.titleLarge),
                 const _ImageUpload(),
@@ -113,10 +108,10 @@ class Form9Screen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: responsive.wp(5)),
                   child: FilledButton(
-                    onPressed: () {
-                      // TODO: Guardar en las base de datos
-                    },
-                    child: const Text('Guardar')
+                    onPressed: socioProvider.isLoading ? null : () => socioProvider.submitForm(context),
+                    child: socioProvider.isLoading ? 
+                        const CircularProgressIndicator(color: Colors.grey, strokeCap: StrokeCap.round) :
+                        Text(socioProvider.current != null ? 'Actualizar':'Guardar')
                   ),
                 )
               ],
@@ -135,6 +130,7 @@ class _TermsAndConditions extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final socioProvider = context.watch<SocioBosqueProvider>();
 
     return Padding(
       padding: EdgeInsets.fromLTRB(responsive.wp(5), responsive.hp(2), responsive.wp(5), responsive.hp(3.5)),
@@ -142,8 +138,8 @@ class _TermsAndConditions extends StatelessWidget {
         children: [
           Radio(
             value: true,
-            groupValue: false,
-            onChanged: (value) {}
+            groupValue: socioProvider.declaracion,
+            onChanged: (value)=> socioProvider.declaracion = value
           ),
           Flexible(child: Text('Declaro que todos los datos proporcionados en el presente formulario son verídicos', style: texts.bodyLarge))
         ],

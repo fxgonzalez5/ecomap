@@ -1,6 +1,8 @@
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/providers/auth_provider.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
+import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
+import 'package:ecomap/presentation/screens/visualization/socio_bosque.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ecomap/config/theme/responsive.dart';
@@ -121,11 +123,17 @@ class _HomeView extends StatelessWidget {
     if(Projects.restauracionForestal.name == project){
       return context.pushNamed(VisualizationRestauracionForestalScreen.name);
     }
+    if(Projects.socioBosque.name == project){
+      return context.pushNamed(VisualizationSocioBosqueScreen.name);
+    }
   }
 
   navigateReport(BuildContext context, String project){
     if(Projects.restauracionForestal.name == project){
       return context.pushNamed(ReportRestauracionForestalScreen.name);
+    }
+    if(Projects.socioBosque.name == project){
+      return context.pushNamed(ReportSocioBosqueScreen.name);
     }
   }
 }

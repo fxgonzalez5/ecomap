@@ -83,14 +83,20 @@ class _Form5ScreenState extends State<Form5Screen> {
                         height: responsive.hp(24),
                         margin: EdgeInsets.only(top: responsive.hp(2), bottom: responsive.hp(1.5)),
                         child: ListView(
-                          children: socioProvider.actividadesSE.map((x) => ListTile(
-                            title: Text('OK', style: texts.bodyLarge,),
-                            subtitle: Text('Descripcion', style: texts.bodyMedium,),
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete,),
-                              onPressed: ()=> socioProvider.eliminarActividad(x),
-                            ),
-                          ))
+                          children: socioProvider.actividadesSE.map((x) => 
+                            Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  title: Text(x.nombre ?? '--', style: texts.bodyLarge,),
+                                  subtitle: Text(x.descripcion ?? '--', style: texts.bodyMedium,),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete,),
+                                    onPressed: ()=> socioProvider.eliminarActividad(x),
+                                  ),
+                                ),
+                              ),
+                            ))
                           .toList()
                         )
                       ),
