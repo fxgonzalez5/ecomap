@@ -1,6 +1,5 @@
 
 import 'dart:io';
-
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/screens/reports/socio_bosque_detalle.dart';
 import 'package:ecomap/presentation/screens/screens.dart';

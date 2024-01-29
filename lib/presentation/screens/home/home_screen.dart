@@ -1,7 +1,9 @@
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/providers/auth_provider.dart';
+import 'package:ecomap/presentation/providers/control_forestal.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
+import 'package:ecomap/presentation/screens/visualization/control_forestal.dart';
 import 'package:ecomap/presentation/screens/visualization/socio_bosque.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -117,6 +119,10 @@ class _HomeView extends StatelessWidget {
       context.read<SocioBosqueProvider>().cleanData();
       return context.pushNamed(Form1Screen.name);
     }
+    if(Projects.controlForestal.name == project){
+      context.read<ControlForestalProvider>().cleanData();
+      return context.pushNamed(FormControlForestalPropietarioScreen.name);
+    }
   }
 
   navigateVisualization(BuildContext context, String project){
@@ -126,6 +132,10 @@ class _HomeView extends StatelessWidget {
     if(Projects.socioBosque.name == project){
       return context.pushNamed(VisualizationSocioBosqueScreen.name);
     }
+    if(Projects.controlForestal.name == project){
+      context.read<ControlForestalProvider>().cleanData();
+      return context.pushNamed(VisualizationControlForestalScreen.name);
+    }
   }
 
   navigateReport(BuildContext context, String project){
@@ -134,6 +144,9 @@ class _HomeView extends StatelessWidget {
     }
     if(Projects.socioBosque.name == project){
       return context.pushNamed(ReportSocioBosqueScreen.name);
+    }
+    if(Projects.controlForestal.name == project){
+      return context.pushNamed(ReportControlForestalScreen.name);
     }
   }
 }

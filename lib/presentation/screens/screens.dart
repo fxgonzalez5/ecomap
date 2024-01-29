@@ -19,3 +19,8 @@ export 'package:ecomap/presentation/screens/forms/restauracion_forestal/potencia
 export 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
 export 'package:ecomap/presentation/screens/reports/restauracion_forestal.dart';
 export 'package:ecomap/presentation/screens/reports/restauracion_forestal_detalle.dart';
+export 'package:ecomap/presentation/screens/forms/control_forestal/poblacion_screen.dart';
+export 'package:ecomap/presentation/screens/forms/control_forestal/linea_screen.dart';
+export 'package:ecomap/presentation/screens/forms/control_forestal/propietario_screen.dart';
+export 'package:ecomap/presentation/screens/reports/control_forestal.dart';
+export 'package:ecomap/presentation/screens/reports/control_forestal_detalle.dart';

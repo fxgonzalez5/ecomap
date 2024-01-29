@@ -1,19 +1,22 @@
 
 class ControlForestal{
   String? id;
-  _DatosPropietario datosPropietario;
-  _LineaBase lineaBase;
-  _Poblacion poblacion;
+  DateTime fechaRegistro;
+  DatosPropietario datosPropietario;
+  LineaBase lineaBase;
+  Poblacion poblacion;
 
   ControlForestal({
     this.id,
+    required this.fechaRegistro,
     required this.datosPropietario,
     required this.lineaBase,
     required this.poblacion
   });
+
 }
 
-class _DatosPropietario{
+class DatosPropietario{
   String? nombre;
   String? provincia;
   String? canton;
@@ -22,7 +25,7 @@ class _DatosPropietario{
   String? celular;
   String? email;
 
-  _DatosPropietario({
+  DatosPropietario({
     this.nombre,
     this.provincia,
     this.canton,
@@ -33,14 +36,14 @@ class _DatosPropietario{
   });
 }
 
-class _LineaBase{
+class LineaBase{
   double? volumenMaderaRevisada;
   double? volumenMaderaRetenida;
   int? retencionEspecimenes;
   double? superficieIncendios;
   int? programas;
 
-  _LineaBase({
+  LineaBase({
     this.volumenMaderaRevisada,
     this.volumenMaderaRetenida,
     this.retencionEspecimenes,
@@ -49,7 +52,7 @@ class _LineaBase{
   });
 }
 
-class _Poblacion{
+class Poblacion{
   int? propietarios;
   int? regentes;
   int? ejecutores;
@@ -57,7 +60,7 @@ class _Poblacion{
   int? motosierristas;
   int? transportistasMadera;
 
-  _Poblacion({
+  Poblacion({
     this.propietarios,
     this.regentes,
     this.ejecutores,

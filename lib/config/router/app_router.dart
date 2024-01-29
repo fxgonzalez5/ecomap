@@ -1,6 +1,7 @@
 import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
 import 'package:ecomap/presentation/screens/reports/socio_bosque_detalle.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
+import 'package:ecomap/presentation/screens/visualization/control_forestal.dart';
 import 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
 import 'package:ecomap/presentation/screens/visualization/socio_bosque.dart';
 import 'package:go_router/go_router.dart';
@@ -128,6 +129,36 @@ final appRouter = GoRouter(
       path: '/report-socio-bosque-detalle',
       name: ReportSocioBosqueDetalleScreen.name,
       builder: (context, state) => ReportSocioBosqueDetalleScreen(),
+    ),
+    GoRoute(
+      path: '/form-control-forestal-propietario',
+      name: FormControlForestalPropietarioScreen.name,
+      builder: (context, state) => FormControlForestalPropietarioScreen(),
+    ),
+    GoRoute(
+      path: '/form-control-forestal-linea',
+      name: FormControlForestaLineaScreen.name,
+      builder: (context, state) => FormControlForestaLineaScreen(),
+    ),
+    GoRoute(
+      path: '/form-control-forestal-poblacion',
+      name: FormControlForestaPoblacionScreen.name,
+      builder: (context, state) => FormControlForestaPoblacionScreen(),
+    ),
+    GoRoute(
+      path: '/visualization-control-forestal',
+      name: VisualizationControlForestalScreen.name,
+      builder: (context, state) => VisualizationControlForestalScreen(),
+    ),
+    GoRoute(
+      path: '/report-control-forestal',
+      name: ReportControlForestalScreen.name,
+      builder: (context, state) => ReportControlForestalScreen(),
+    ),
+    GoRoute(
+      path: '/report-control-forestal-detalle',
+      name: ReportControlForestalDetalleScreen.name,
+      builder: (context, state) => ReportControlForestalDetalleScreen(),
     ),
   ],
 );
