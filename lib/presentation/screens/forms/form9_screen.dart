@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class Form9Screen extends StatelessWidget {
@@ -147,7 +150,6 @@ class _TermsAndConditions extends StatelessWidget {
     );
   }
 }
-
 class _ImageUpload extends StatelessWidget {
   const _ImageUpload();
 
@@ -155,6 +157,7 @@ class _ImageUpload extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
+    final provider = context.watch<SocioBosqueProvider>();
 
     return Padding(
       padding: EdgeInsets.fromLTRB(responsive.wp(5), responsive.hp(2), responsive.wp(5), responsive.hp(3.5)),
@@ -167,7 +170,11 @@ class _ImageUpload extends StatelessWidget {
               dashPattern: const [5],
               child: SizedBox(
                 height: responsive.hp(20),
-                child: Center(child: Text('Subir imagen', style: texts.bodyLarge)),
+                child: Center(
+                  child: provider.croquisURL == null ? 
+                    Text('Subir imagen', style: texts.bodyLarge) :
+                    Image.network(provider.croquisURL!)
+                ),
               ),
             ),
           ),
@@ -177,11 +184,29 @@ class _ImageUpload extends StatelessWidget {
               fixedSize: MaterialStatePropertyAll(Size.infinite),
               textStyle: MaterialStatePropertyAll(TextStyle(fontWeight: FontWeight.bold))
             ),
-            onPressed: () {},
+            onPressed: ()=> uploadImage(context),
             child: const Icon(Icons.upload)
           ),
         ],
       ),
     );
+  }
+
+  Future<void> uploadImage(BuildContext context) async {
+    final provider = context.read<SocioBosqueProvider>();
+    // Seleccionar imagen desde la galería
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) return;
+
+    // Obtener referencia al bucket de Firebase Storage
+    final firebaseStorageRef = FirebaseStorage.instance.ref().child('images/${DateTime.now()}.png');
+
+    // Subir la imagen al bucket
+    await firebaseStorageRef.putFile(File(pickedFile.path));
+
+    // Obtener la URL de descarga
+    provider.croquisURL = await firebaseStorageRef.getDownloadURL();
+
   }
 }

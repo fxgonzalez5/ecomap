@@ -150,7 +150,13 @@ class SocioBosqueProvider with ChangeNotifier{
     _cerramiento = value;
     notifyListeners();
   }
-  String? croquisURL;
+  String? _croquisURL;
+  String? get croquisURL => _croquisURL;
+  set croquisURL(String? value){
+    _croquisURL = value;
+    notifyListeners();
+  }
+
   bool? _declaracion;
   bool? get declaracion => _declaracion;
   set declaracion(bool? value){

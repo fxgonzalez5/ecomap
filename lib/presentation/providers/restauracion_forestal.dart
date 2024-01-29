@@ -53,6 +53,12 @@ class RestauracionForestalProvider with ChangeNotifier{
   final observacionesController = TextEditingController();
   final cantidadController = TextEditingController();
   final actividadesController = TextEditingController();
+  String? _informeImagenURL;
+  String? get informeImagenURL => _informeImagenURL;
+  set informeImagenURL(String? value){
+    _informeImagenURL = value;
+    notifyListeners();
+  }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading; 
@@ -95,6 +101,7 @@ class RestauracionForestalProvider with ChangeNotifier{
     canton = restauracion.ubicacion.canton;
     parroquiaController.text = restauracion.ubicacion.parroquia ?? '';
     parroquia = restauracion.ubicacion.parroquia;
+    informeImagenURL = restauracion.potenciacion.informeImagenURL;
     context.pushNamed(FormRestauracionForestalBeneficiarioScreen.name);
   }
 
@@ -147,7 +154,7 @@ class RestauracionForestalProvider with ChangeNotifier{
         potenciacion: RestauracionPotenciacionViveros(
           cantidad: cantidadController.text.isEmpty ? null : int.tryParse(cantidadController.text),
           actividades: actividadesController.text.isEmpty ? null : actividadesController.text,
-          informeImagenURL: null
+          informeImagenURL: informeImagenURL
         )
       );
       await _restauracionForestalRepository.create(restauracion);
@@ -186,7 +193,7 @@ class RestauracionForestalProvider with ChangeNotifier{
         potenciacion: RestauracionPotenciacionViveros(
           cantidad: cantidadController.text.isEmpty ? null : int.tryParse(cantidadController.text),
           actividades: actividadesController.text.isEmpty ? null : actividadesController.text,
-          informeImagenURL: null
+          informeImagenURL: informeImagenURL
         )
       );
       await _restauracionForestalRepository.update(restauracion);
