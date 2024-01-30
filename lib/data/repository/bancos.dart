@@ -13,7 +13,6 @@ class BancosRepository extends BancosBaseRepository{
     try {
       final response = await Dio().get(API);
       data = response.data;
-      print(data);
     } catch (e) {
       print(e.toString());
     }

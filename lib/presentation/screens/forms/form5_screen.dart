@@ -26,7 +26,7 @@ class _Form5ScreenState extends State<Form5Screen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            collapsedHeight: responsive.hp(8),
+            collapsedHeight: responsive.hp(10),
             expandedHeight: responsive.hp(12),
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(

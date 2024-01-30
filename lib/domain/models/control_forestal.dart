@@ -24,6 +24,8 @@ class DatosPropietario{
   String? convencional;
   String? celular;
   String? email;
+  double? latitud;
+  double? longitud;
 
   DatosPropietario({
     this.nombre,
@@ -33,6 +35,8 @@ class DatosPropietario{
     this.convencional,
     this.celular,
     this.email,
+    this.latitud,
+    this.longitud
   });
 }
 

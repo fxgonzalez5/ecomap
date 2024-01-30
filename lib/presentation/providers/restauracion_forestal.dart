@@ -53,6 +53,9 @@ class RestauracionForestalProvider with ChangeNotifier{
   final observacionesController = TextEditingController();
   final cantidadController = TextEditingController();
   final actividadesController = TextEditingController();
+  final coordenadasController = TextEditingController();
+  double? latitud;
+  double? longitud;
   String? _informeImagenURL;
   String? get informeImagenURL => _informeImagenURL;
   set informeImagenURL(String? value){
@@ -83,6 +86,7 @@ class RestauracionForestalProvider with ChangeNotifier{
 
   navigateToEdit(BuildContext context, RestauracionForestal restauracion){
     _currentRestauracionForestal = restauracion;
+    coordenadasController.text = restauracion.ubicacion.latitud == null ? '' : '${restauracion.ubicacion.latitud} ; ${restauracion.ubicacion.longitud}';
     codigoFichaController.text = restauracion.beneficiario.codigoFicha ?? '';
     cedulaController.text = restauracion.beneficiario.cedula ?? '';
     nombreController.text = restauracion.beneficiario.nombre ?? '';
@@ -146,8 +150,8 @@ class RestauracionForestalProvider with ChangeNotifier{
           provincia: provincia,
           canton: canton,
           parroquia: parroquia,
-          latitud: currentPosition?.latitude,
-          longitud: currentPosition?.longitude,
+          latitud: latitud,
+          longitud: longitud,
           observaciones: observacionesController.text.isEmpty ? null : observacionesController.text
 
         ), 
@@ -207,7 +211,7 @@ class RestauracionForestalProvider with ChangeNotifier{
     }
   }
 
-  Future<Position?> getLocation() async{
+  Future<void> getLocation() async{
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -228,7 +232,12 @@ class RestauracionForestalProvider with ChangeNotifier{
     if (permission == LocationPermission.deniedForever) {
       return null;
     }
-    return await Geolocator.getCurrentPosition();
+    final currentPosition = await Geolocator.getCurrentPosition();
+    longitud = currentPosition.longitude;
+    latitud = currentPosition.latitude;
+    if(latitud != null){
+      coordenadasController.text = "${latitud} ; ${longitud}";
+    }
   }
 
   cleanData(){

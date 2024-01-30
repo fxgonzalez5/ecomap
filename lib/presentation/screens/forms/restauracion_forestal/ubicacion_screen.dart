@@ -16,6 +16,16 @@ class FormRestauracionForestalUbicacionScreen extends StatefulWidget {
 }
 
 class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<RestauracionForestalProvider>(context, listen: false);
+    if(provider.currentRestauracionForestal == null){
+      provider.getLocation();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive(context);
@@ -27,7 +37,7 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            collapsedHeight: responsive.hp(8),
+            collapsedHeight: responsive.hp(10),
             expandedHeight: responsive.hp(12),
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
@@ -92,6 +102,13 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
                             restauracionProvider.parroquia = value;
                           },
                           initialSelection: restauracionProvider.parroquia,
+                        ),
+                        CustomInputText(
+                          label: 'Ubicación actual',
+                          hintText: '',
+                          keyboardType: TextInputType.none,
+                          controller: restauracionProvider.coordenadasController,
+                          readOnly: true,
                         ),
                         CustomInputText(
                           label: 'Observaciones',

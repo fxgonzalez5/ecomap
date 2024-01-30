@@ -25,6 +25,8 @@ class ControlForestalDto{
   int? propietariosIndustrias;
   int? motosierristas;
   int? transportistasMadera;
+  double? latitud;
+  double? longitud;
 
   ControlForestalDto({
     this.id,
@@ -47,6 +49,8 @@ class ControlForestalDto{
     this.propietariosIndustrias,
     this.motosierristas,
     this.transportistasMadera,
+    this.latitud,
+    this.longitud,
   });
 
   factory ControlForestalDto.fromMap(Map<String, dynamic> json){
@@ -60,6 +64,8 @@ class ControlForestalDto{
       convencional: json['propietario']['convencional'],
       celular: json['propietario']['celular'],
       email: json['propietario']['email'],
+      latitud: double.tryParse(json['propietario']['latitud']),
+      longitud: double.tryParse(json['propietario']['longitud']),
       volumenMaderaRevisada: json['lineaBase']['volumenMaderaRevisada'],
       volumenMaderaRetenida: json['lineaBase']['volumenMaderaRetenida'],
       retencionEspecimenes: json['lineaBase']['retencionEspecimenes'],
@@ -95,7 +101,9 @@ class ControlForestalDto{
       ejecutores: controlForestal.poblacion.ejecutores,
       propietariosIndustrias: controlForestal.poblacion.propietariosIndustrias,
       motosierristas: controlForestal.poblacion.motosierristas,
-      transportistasMadera: controlForestal.poblacion.transportistasMadera
+      transportistasMadera: controlForestal.poblacion.transportistasMadera,
+      latitud: controlForestal.datosPropietario.latitud,
+      longitud: controlForestal.datosPropietario.longitud
     );
   }
 
@@ -110,7 +118,9 @@ class ControlForestalDto{
         parroquia: parroquia,
         convencional: convencional,
         celular: celular,
-        email: email
+        email: email,
+        latitud: latitud,
+        longitud: longitud,
       ), 
       lineaBase: LineaBase(
         volumenMaderaRevisada: volumenMaderaRevisada,
@@ -139,7 +149,9 @@ class ControlForestalDto{
         'parroquia': parroquia,
         'convencional': convencional,
         'celular': celular,
-        'email': email
+        'email': email,
+        'latitud': latitud,
+        'longitud': longitud
       },
       'lineaBase':{
         'volumenMaderaRevisada': volumenMaderaRevisada,

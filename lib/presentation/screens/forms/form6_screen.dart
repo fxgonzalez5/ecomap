@@ -17,12 +17,15 @@ class Form6Screen extends StatelessWidget {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
     final socioProvider = context.watch<SocioBosqueProvider>();
+    if(socioProvider.current == null){
+      socioProvider.getLocation();
+    }
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            collapsedHeight: responsive.hp(8),
+            collapsedHeight: responsive.hp(10),
             expandedHeight: responsive.hp(12),
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
@@ -46,6 +49,13 @@ class Form6Screen extends StatelessWidget {
                       children: [
                         Text('Ubicación del Predio', style: texts.titleLarge),
                         SizedBox(height: 10,),
+                        CustomInputText(
+                          label: 'Ubicación actual',
+                          hintText: '',
+                          keyboardType: TextInputType.none,
+                          controller: socioProvider.coordenadasController,
+                          readOnly: true,
+                        ),
                         CustomInputText(
                           label: 'Superficie del Predio (Ha)',
                           hintText: 'Ingrese la superficie ',

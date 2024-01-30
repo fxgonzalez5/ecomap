@@ -10,6 +10,7 @@ class CustomInputText extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final Function()? onTap;
+  final bool readOnly;
 
   const CustomInputText({
     super.key,
@@ -20,7 +21,8 @@ class CustomInputText extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.controller,
-    this.onTap
+    this.onTap,
+    this.readOnly = false
   });
 
   @override
@@ -49,6 +51,7 @@ class CustomInputText extends StatelessWidget {
             validator: validator,
             controller: controller,
             onTap: onTap,
+            readOnly: readOnly,
           ),
         ),
       ],

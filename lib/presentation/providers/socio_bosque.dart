@@ -163,6 +163,9 @@ class SocioBosqueProvider with ChangeNotifier{
     _declaracion = value;
     notifyListeners();
   }
+  final coordenadasController = TextEditingController();
+  double? latitud;
+  double? longitud;
 
   Future<void> getAll() async{
     try {
@@ -181,6 +184,7 @@ class SocioBosqueProvider with ChangeNotifier{
 
   navigateToEdit(BuildContext context, SocioBosque socioBosque){
     _current = socioBosque;
+    coordenadasController.text = socioBosque.ubicacionPredio.latitud == null ? '' : '${socioBosque.ubicacionPredio.latitud} ; ${socioBosque.ubicacionPredio.longitud}';
     tipoSocioController.text = socioBosque.tipoSocio ?? '';
     tipoCapitulo = socioBosque.tipoCapitulo;
     rucDatosGeneralesController.text = socioBosque.datosGenerales.ruc ?? '';
@@ -263,7 +267,6 @@ class SocioBosqueProvider with ChangeNotifier{
   crear(BuildContext context) async{
     try {
       isLoading = true;
-      final currentPosition = await getLocation();
       final socioBosque = SocioBosque(
         fechaRegistro: DateTime.now().toUtc(),  
         tipoSocio: tipoSocioController.text,
@@ -312,8 +315,8 @@ class SocioBosqueProvider with ChangeNotifier{
           superficie: superficieUbicacion.text,
           superficieConservar: superficieConservarUbicacion.text,
           descripcion: descripcionUbicacion.text,
-          latitud: currentPosition?.latitude,
-          longitud: currentPosition?.longitude,
+          latitud: latitud,
+          longitud: longitud,
         ), 
         linderoPredio: SocioLinderoPredio(
           norte: norteLindero.text,
@@ -476,7 +479,7 @@ class SocioBosqueProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<Position?> getLocation() async{
+  Future<void> getLocation() async{
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -496,7 +499,12 @@ class SocioBosqueProvider with ChangeNotifier{
     if (permission == LocationPermission.deniedForever) {
       return null;
     }
-    return await Geolocator.getCurrentPosition();
+    final currentPosition = await Geolocator.getCurrentPosition();
+    longitud = currentPosition.longitude;
+    latitud = currentPosition.latitude;
+    if(latitud != null){
+      coordenadasController.text = "${latitud} ; ${longitud}";
+    }
   }
 
 

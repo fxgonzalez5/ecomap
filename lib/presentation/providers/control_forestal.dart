@@ -5,6 +5,7 @@ import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/screens/visualization/control_forestal.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -38,6 +39,9 @@ class ControlForestalProvider with ChangeNotifier{
     _provincia = value;
     notifyListeners();
   }
+  final coordenadasController = TextEditingController();
+  double? latitud;
+  double? longitud;
   final cantonController = TextEditingController();
   String? _canton = null;
   String? get canton => _canton;
@@ -84,6 +88,7 @@ class ControlForestalProvider with ChangeNotifier{
 
   navigateToEdit(BuildContext context, ControlForestal control){
     _current = control;
+    coordenadasController.text = control.datosPropietario.latitud == null ? '' : '${control.datosPropietario.latitud} ; ${control.datosPropietario.longitud}';
     nombrePropietarioController.text = control.datosPropietario.nombre ?? '';
     provinciaController.text = control.datosPropietario.provincia ?? '';
     provincia = control.datosPropietario.provincia;
@@ -138,7 +143,9 @@ class ControlForestalProvider with ChangeNotifier{
           parroquia: parroquia,
           celular: celularController.text,
           convencional: convencionalController.text,
-          email: emailController.text
+          email: emailController.text,
+          latitud: latitud,
+          longitud: longitud,
         ), 
         lineaBase: LineaBase(
           programas: int.tryParse(programasController.text),
@@ -181,7 +188,9 @@ class ControlForestalProvider with ChangeNotifier{
           parroquia: parroquia,
           celular: celularController.text,
           convencional: convencionalController.text,
-          email: emailController.text
+          email: emailController.text,
+          latitud: _current!.datosPropietario.latitud,
+          longitud: _current!.datosPropietario.longitud
         ), 
         lineaBase: LineaBase(
           programas: int.tryParse(programasController.text),
@@ -288,5 +297,34 @@ class ControlForestalProvider with ChangeNotifier{
         ]
       ),
     );
+  }
+
+  Future<void> getLocation() async{
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
+      }
+    }
+    
+    if (permission == LocationPermission.deniedForever) {
+      return null;
+    }
+    final currentPosition = await Geolocator.getCurrentPosition();
+    longitud = currentPosition.longitude;
+    latitud = currentPosition.latitude;
+    if(latitud != null){
+      coordenadasController.text = "${latitud} ; ${longitud}";
+    }
   }
 }

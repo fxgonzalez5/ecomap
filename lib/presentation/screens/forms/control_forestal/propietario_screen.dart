@@ -23,12 +23,15 @@ class _PropietarioState extends State<FormControlForestalPropietarioScreen> {
     final texts = Theme.of(context).textTheme;
     final controlProvider = context.watch<ControlForestalProvider>();
     final generalProvider = context.watch<GeneralProvider>();
+    if(controlProvider.current == null){
+      controlProvider.getLocation();
+    }
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            collapsedHeight: responsive.hp(8),
+            collapsedHeight: responsive.hp(10),
             expandedHeight: responsive.hp(12),
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
@@ -99,6 +102,13 @@ class _PropietarioState extends State<FormControlForestalPropietarioScreen> {
                             controlProvider.parroquia = value;
                           },
                           initialSelection: controlProvider.parroquia,
+                        ),
+                        CustomInputText(
+                          label: 'Ubicación actual',
+                          hintText: '',
+                          keyboardType: TextInputType.none,
+                          controller: controlProvider.coordenadasController,
+                          readOnly: true,
                         ),
                         CustomInputText(
                           label: 'Teléfono convencional',

@@ -30,7 +30,7 @@ class _PotenciacionScreenState extends State<FormRestauracionForestalPotenciacio
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            collapsedHeight: responsive.hp(8),
+            collapsedHeight: responsive.hp(12),
             expandedHeight: responsive.hp(15),
             pinned: true,
             flexibleSpace: const FlexibleSpaceBar(
