@@ -4,28 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ControlForestalList extends StatefulWidget {
-  Function(ControlForestal)? onTap;
-  ControlForestalList({ super.key, required this.onTap });
+  final Function(ControlForestal)? onTap;
+  const ControlForestalList({ super.key, required this.onTap });
 
   @override
-  _ControlForestalListState createState() => _ControlForestalListState();
+  State<ControlForestalList> createState() => _ControlForestalListState();
 }
 
 class _ControlForestalListState extends State<ControlForestalList> {
   @override
   void initState() {
+    super.initState();
     Provider.of<ControlForestalProvider>(context, listen: false).getAll();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final controlProvider = context.watch<ControlForestalProvider>();
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 70,
           child: Padding(
-            padding: EdgeInsets.only(left: 50, right: 50),
+            padding: const EdgeInsets.only(left: 50, right: 50),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar formulario',
@@ -37,7 +38,7 @@ class _ControlForestalListState extends State<ControlForestalList> {
         ),
         Expanded(
           child: ListView(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             children: buildItems(context),
           ),
         )

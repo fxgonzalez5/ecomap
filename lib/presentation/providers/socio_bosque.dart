@@ -53,21 +53,21 @@ class SocioBosqueProvider with ChangeNotifier{
   }
   final direccionNotificacionController = TextEditingController();
   final provinciaNotificacionController = TextEditingController();
-  String? _provincia = null;
+  String? _provincia;
   String? get provincia => _provincia;
   set provincia(String? value){
     _provincia = value;
     notifyListeners();
   }
   final cantonNotificacionController = TextEditingController();
-  String? _canton = null;
+  String? _canton;
   String? get canton => _canton;
   set canton(String? value){
     _canton = value;
     notifyListeners();
   }
   final parroquiaNotificacionController = TextEditingController();
-  String? _parroquia = null;
+  String? _parroquia;
   String? get parroquia => _parroquia;
   set parroquia(String? value){
     _parroquia = parroquia;
@@ -191,7 +191,7 @@ class SocioBosqueProvider with ChangeNotifier{
     representanteDatosGeneralesControler.text = socioBosque.datosGenerales.representante ?? '';
     registroDatosGeneralesController.text = socioBosque.datosGenerales.registro ?? '';
     fechaPersonaJuidicaDatosGeneralesController.text = socioBosque.datosGenerales.fechaPersonaJuidica == null ? '':socioBosque.datosGenerales.fechaPersonaJuidica.toString().split(' ')[0];
-    fechaPersonaJuidicaDatosGenerales = socioBosque.datosGenerales.fechaPersonaJuidica == null ? null : socioBosque.datosGenerales.fechaPersonaJuidica.toString().split(' ')[0];;
+    fechaPersonaJuidicaDatosGenerales = socioBosque.datosGenerales.fechaPersonaJuidica == null ? null : socioBosque.datosGenerales.fechaPersonaJuidica.toString().split(' ')[0];
     etniaDatosGeneralesController.text = socioBosque.datosGenerales.etnia ?? '';
     _vivenEnElPredioDatosGenerales = socioBosque.datosGenerales.vivenEnElPredio;
     direccionNotificacionController.text = socioBosque.notificaciones.direccion ?? '';
@@ -485,25 +485,25 @@ class SocioBosqueProvider with ChangeNotifier{
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return null;
+      return;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return null;
+        return;
       }
     }
     
     if (permission == LocationPermission.deniedForever) {
-      return null;
+      return;
     }
     final currentPosition = await Geolocator.getCurrentPosition();
     longitud = currentPosition.longitude;
     latitud = currentPosition.latitude;
     if(latitud != null){
-      coordenadasController.text = "${latitud} ; ${longitud}";
+      coordenadasController.text = "$latitud ; $longitud";
     }
   }
 
@@ -587,11 +587,11 @@ class SocioBosqueProvider with ChangeNotifier{
     );
 
     final output = await getExternalStorageDirectory();
-    final _pathPDF = "${output!.path}/reporte.pdf";
-    final file = File(_pathPDF!);
+    final pathPDF = "${output!.path}/reporte.pdf";
+    final file = File(pathPDF);
     final path = await pdf.save();
     await file.writeAsBytes(path);
-    await OpenFile.open(_pathPDF);
+    await OpenFile.open(pathPDF);
   }
 
   pw.Container _buildTableRow(String nombre, String detalle, {PdfColor? color, required pw.Font font}){
@@ -604,7 +604,7 @@ class SocioBosqueProvider with ChangeNotifier{
         children: [
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 nombre,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
@@ -613,7 +613,7 @@ class SocioBosqueProvider with ChangeNotifier{
           ),
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 detalle,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),

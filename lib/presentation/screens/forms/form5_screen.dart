@@ -12,7 +12,7 @@ class Form5Screen extends StatefulWidget {
   const Form5Screen({super.key});
 
   @override
-  _Form5ScreenState createState() => _Form5ScreenState();
+  State<Form5Screen> createState() => _Form5ScreenState();
 }
 
 class _Form5ScreenState extends State<Form5Screen> {
@@ -91,7 +91,7 @@ class _Form5ScreenState extends State<Form5Screen> {
                                   title: Text(x.nombre ?? '--', style: texts.bodyLarge,),
                                   subtitle: Text(x.descripcion ?? '--', style: texts.bodyMedium,),
                                   trailing: IconButton(
-                                    icon: Icon(Icons.delete,),
+                                    icon: const Icon(Icons.delete,),
                                     onPressed: ()=> socioProvider.eliminarActividad(x),
                                   ),
                                 ),

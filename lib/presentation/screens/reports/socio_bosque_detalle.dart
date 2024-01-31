@@ -3,18 +3,15 @@ import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 class ReportSocioBosqueDetalleScreen extends StatefulWidget {
   static const String name = 'report_socio_bosque_detalle_screen';
 
-  ReportSocioBosqueDetalleScreen({ super.key });
+  const ReportSocioBosqueDetalleScreen({ super.key });
 
   @override
-  _SocioBosqueDetalleState createState() => _SocioBosqueDetalleState();
+  State<ReportSocioBosqueDetalleScreen> createState() => _SocioBosqueDetalleState();
 }
 
 class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
@@ -45,7 +42,7 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
                 Table(
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.black, width: 1),
                         ),  
@@ -53,7 +50,7 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
                       children: [
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Nombre',
                               style: texts.titleMedium,
@@ -62,7 +59,7 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
                         ),
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Detalle',
                               style: texts.titleMedium,
@@ -78,7 +75,7 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
                   padding: const EdgeInsets.only(left:8.0, right: 8, bottom: 8, top: 20),
                   child: FilledButton(
                     onPressed: () => socioProvider.generateAndSavePDF(context, toDataTable(context, socioProvider.current!, context.read<GeneralProvider>().provincias)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Generar '),
@@ -96,14 +93,13 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
   }
 
   buildRows(BuildContext context){
-    final texts = Theme.of(context).textTheme;
     final socioProvider = context.watch<SocioBosqueProvider>();
     
     final restauracion = socioProvider.current!;
     final data = toDataTable(context, restauracion, context.watch<GeneralProvider>().provincias);
 
     return data.keys.map((x) => TableRow(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: Colors.black, width: 0.5),
         ),  
@@ -111,13 +107,13 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
       children: [
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(x),
           ),
         ),
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(data[x].toString()),
           ),
         ),
@@ -139,7 +135,7 @@ class _SocioBosqueDetalleState extends State<ReportSocioBosqueDetalleScreen> {
       'Número de cuenta': socio.cuenta.numero ?? '--',
       'Número beneficiarios': socio.socioEconomico.beneficiarios == null ? '--' : socio.socioEconomico.beneficiarios.toString(),
       'Número de familias': socio.socioEconomico.familias == null ? '--': socio.socioEconomico.familias.toString(),
-      'Ubicación del predio': socio.ubicacionPredio.latitud.toString() + ', '+socio.ubicacionPredio.longitud.toString(),
+      'Ubicación del predio': '${socio.ubicacionPredio.latitud}, ${socio.ubicacionPredio.longitud}',
       'Hectareas a conservar': socio.ubicacionPredio.superficieConservar == null ? '--' : socio.ubicacionPredio.superficieConservar.toString(),
       'Lindero Norte': socio.linderoPredio.norte == null ? '--' : socio.linderoPredio.norte.toString(),
       'Lindero Sur': socio.linderoPredio.sur == null ? '--' : socio.linderoPredio.sur.toString(),

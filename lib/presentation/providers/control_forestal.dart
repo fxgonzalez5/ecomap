@@ -33,7 +33,7 @@ class ControlForestalProvider with ChangeNotifier{
   //Form
   final nombrePropietarioController = TextEditingController();
   final provinciaController = TextEditingController();
-  String? _provincia = null;
+  String? _provincia;
   String? get provincia => _provincia;
   set provincia(String? value){
     _provincia = value;
@@ -43,14 +43,14 @@ class ControlForestalProvider with ChangeNotifier{
   double? latitud;
   double? longitud;
   final cantonController = TextEditingController();
-  String? _canton = null;
+  String? _canton;
   String? get canton => _canton;
   set canton(String? value){
     _canton = value;
     notifyListeners();
   }
   final parroquiaController = TextEditingController();
-  String? _parroquia = null;
+  String? _parroquia;
   String? get parroquia => _parroquia;
   set parroquia(String? value){
     _parroquia = parroquia;
@@ -261,11 +261,11 @@ class ControlForestalProvider with ChangeNotifier{
     );
 
     final output = await getExternalStorageDirectory();
-    final _pathPDF = "${output!.path}/reporte.pdf";
-    final file = File(_pathPDF);
+    final pathPDF = "${output!.path}/reporte.pdf";
+    final file = File(pathPDF);
     final path = await pdf.save();
     await file.writeAsBytes(path);
-    await OpenFile.open(_pathPDF);
+    await OpenFile.open(pathPDF);
   }
 
   pw.Container _buildTableRow(String nombre, String detalle, {PdfColor? color, required pw.Font font}){
@@ -278,7 +278,7 @@ class ControlForestalProvider with ChangeNotifier{
         children: [
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 nombre,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
@@ -287,7 +287,7 @@ class ControlForestalProvider with ChangeNotifier{
           ),
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 detalle,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
@@ -306,25 +306,25 @@ class ControlForestalProvider with ChangeNotifier{
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return null;
+      return;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return null;
+        return;
       }
     }
     
     if (permission == LocationPermission.deniedForever) {
-      return null;
+      return;
     }
     final currentPosition = await Geolocator.getCurrentPosition();
     longitud = currentPosition.longitude;
     latitud = currentPosition.latitude;
     if(latitud != null){
-      coordenadasController.text = "${latitud} ; ${longitud}";
+      coordenadasController.text = "$latitud ; $longitud";
     }
   }
 }

@@ -1,10 +1,8 @@
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/providers/control_forestal.dart';
-import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/forms/control_forestal/poblacion_screen.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +11,7 @@ class FormControlForestaLineaScreen extends StatefulWidget {
   const FormControlForestaLineaScreen({ super.key });
 
   @override
-  _PropietarioState createState() => _PropietarioState();
+  State<FormControlForestaLineaScreen> createState() => _PropietarioState();
 }
 
 class _PropietarioState extends State<FormControlForestaLineaScreen> {
@@ -22,7 +20,6 @@ class _PropietarioState extends State<FormControlForestaLineaScreen> {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
     final controlProvider = context.watch<ControlForestalProvider>();
-    final generalProvider = context.watch<GeneralProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,7 +41,7 @@ class _PropietarioState extends State<FormControlForestaLineaScreen> {
               children: [
                 Text('Información relevante', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

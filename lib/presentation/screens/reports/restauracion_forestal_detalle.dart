@@ -11,7 +11,7 @@ class ReportRestauracionForestalDetalleScreen extends StatefulWidget {
   const ReportRestauracionForestalDetalleScreen({ Key? key }) : super(key: key);
 
   @override
-  _RestauracionForestalDetalleState createState() => _RestauracionForestalDetalleState();
+  State<ReportRestauracionForestalDetalleScreen> createState() => _RestauracionForestalDetalleState();
 }
 
 class _RestauracionForestalDetalleState extends State<ReportRestauracionForestalDetalleScreen> {
@@ -42,7 +42,7 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
                 Table(
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.black, width: 1),
                         ),  
@@ -50,7 +50,7 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
                       children: [
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Nombre',
                               style: texts.titleMedium,
@@ -59,7 +59,7 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
                         ),
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Detalle',
                               style: texts.titleMedium,
@@ -75,7 +75,7 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
                   padding: const EdgeInsets.only(left:8.0, right: 8, bottom: 8, top: 20),
                   child: FilledButton(
                     onPressed: () => restauracionProvider.generateAndSavePDF(context, toDataTable(context, restauracionProvider.currentRestauracionForestal!, context.read<GeneralProvider>().provincias)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Generar '),
@@ -93,14 +93,13 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
   }
 
   buildRows(BuildContext context){
-    final texts = Theme.of(context).textTheme;
     final restauracionProvider = context.watch<RestauracionForestalProvider>();
     
     final restauracion = restauracionProvider.currentRestauracionForestal!;
     final data = toDataTable(context, restauracion, context.watch<GeneralProvider>().provincias);
 
     return data.keys.map((x) => TableRow(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: Colors.black, width: 0.5),
         ),  
@@ -108,13 +107,13 @@ class _RestauracionForestalDetalleState extends State<ReportRestauracionForestal
       children: [
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(x),
           ),
         ),
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(data[x].toString()),
           ),
         ),

@@ -12,7 +12,7 @@ class ReportControlForestalDetalleScreen extends StatefulWidget {
   const ReportControlForestalDetalleScreen({ Key? key }) : super(key: key);
 
   @override
-  _ControlForestalDetalleState createState() => _ControlForestalDetalleState();
+  State<ReportControlForestalDetalleScreen> createState() => _ControlForestalDetalleState();
 }
 
 class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScreen> {
@@ -43,7 +43,7 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
                 Table(
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         border: Border(
                           bottom: BorderSide(color: Colors.black, width: 1),
                         ),  
@@ -51,7 +51,7 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
                       children: [
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Nombre',
                               style: texts.titleMedium,
@@ -60,7 +60,7 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
                         ),
                         TableCell(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               'Detalle',
                               style: texts.titleMedium,
@@ -76,7 +76,7 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
                   padding: const EdgeInsets.only(left:8.0, right: 8, bottom: 8, top: 20),
                   child: FilledButton(
                     onPressed: () => controlProvider.generateAndSavePDF(context, toDataTable(context, controlProvider.current!, context.read<GeneralProvider>().provincias)),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Generar '),
@@ -95,14 +95,13 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
 
 
   buildRows(BuildContext context){
-    final texts = Theme.of(context).textTheme;
     final controlProvider = context.watch<ControlForestalProvider>();
     
     final control = controlProvider.current!;
     final data = toDataTable(context, control, context.watch<GeneralProvider>().provincias);
 
     return data.keys.map((x) => TableRow(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: Colors.black, width: 0.5),
         ),  
@@ -110,13 +109,13 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
       children: [
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(x),
           ),
         ),
         TableCell(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(data[x].toString()),
           ),
         ),
@@ -133,10 +132,10 @@ class _ControlForestalDetalleState extends State<ReportControlForestalDetalleScr
       'Parroquia': control.datosPropietario.parroquia == null ? '--' : provincias[control.datosPropietario.provincia]["cantones"][control.datosPropietario.canton]["canton"]['parroquias'][control.datosPropietario.parroquia],
       'Teléfono/cel': control.datosPropietario.celular ?? '--',
       'Correo': control.datosPropietario.email ?? '--',
-      'Madera revisada':(control.lineaBase.volumenMaderaRevisada == null ? '--' : control.lineaBase.volumenMaderaRevisada.toString() )+ ' m^3',
-      'Madera retenida':(control.lineaBase.volumenMaderaRetenida == null ? '--' : control.lineaBase.volumenMaderaRetenida.toString() )+ ' m^3',
+      'Madera revisada':'${control.lineaBase.volumenMaderaRevisada == null ? '--' : control.lineaBase.volumenMaderaRevisada.toString()} m^3',
+      'Madera retenida':'${control.lineaBase.volumenMaderaRetenida == null ? '--' : control.lineaBase.volumenMaderaRetenida.toString()} m^3',
       'Num Especímenes': control.lineaBase.retencionEspecimenes == null ? '--' : control.lineaBase.retencionEspecimenes.toString(),
-      'Superficie incendios': (control.lineaBase.superficieIncendios == null ? '--' : control.lineaBase.superficieIncendios.toString()) + ' Ha',
+      'Superficie incendios': '${control.lineaBase.superficieIncendios == null ? '--' : control.lineaBase.superficieIncendios.toString()} Ha',
       'Ejecutores': control.poblacion.ejecutores == null ? '--' : control.poblacion.ejecutores.toString(),
       'Transportistas': control.poblacion.transportistasMadera == null ? '--' : control.poblacion.transportistasMadera.toString(),
     };

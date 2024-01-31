@@ -2,7 +2,6 @@ import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
 import 'package:ecomap/presentation/screens/reports/socio_bosque_detalle.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/screens/visualization/control_forestal.dart';
-import 'package:ecomap/presentation/screens/visualization/restauracion_forestal.dart';
 import 'package:ecomap/presentation/screens/visualization/socio_bosque.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,7 +37,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home',
       name: HomeScreen.name,
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
       path: '/form1',
@@ -88,77 +87,77 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/restauracion-forestal-beneficiario-form',
       name: FormRestauracionForestalBeneficiarioScreen.name,
-      builder: (context, state) => FormRestauracionForestalBeneficiarioScreen(),
+      builder: (context, state) => const FormRestauracionForestalBeneficiarioScreen(),
     ),
     GoRoute(
       path: '/restauracion-forestal-ubicacion-form',
       name: FormRestauracionForestalUbicacionScreen.name,
-      builder: (context, state) => FormRestauracionForestalUbicacionScreen(),
+      builder: (context, state) => const FormRestauracionForestalUbicacionScreen(),
     ),
     GoRoute(
       path: '/restauracion-forestal-potenciacion-form',
       name: FormRestauracionForestalPotenciacionScreen.name,
-      builder: (context, state) => FormRestauracionForestalPotenciacionScreen(),
+      builder: (context, state) => const FormRestauracionForestalPotenciacionScreen(),
     ),
     GoRoute(
       path: '/visualization-restauracion-forestal',
       name: VisualizationRestauracionForestalScreen.name,
-      builder: (context, state) => VisualizationRestauracionForestalScreen(),
+      builder: (context, state) => const VisualizationRestauracionForestalScreen(),
     ),
     GoRoute(
       path: '/report-restauracion-forestal',
       name: ReportRestauracionForestalScreen.name,
-      builder: (context, state) => ReportRestauracionForestalScreen(),
+      builder: (context, state) => const ReportRestauracionForestalScreen(),
     ),
     GoRoute(
       path: '/report-restauracion-forestal-detalle',
       name: ReportRestauracionForestalDetalleScreen.name,
-      builder: (context, state) => ReportRestauracionForestalDetalleScreen(),
+      builder: (context, state) => const ReportRestauracionForestalDetalleScreen(),
     ),
     GoRoute(
       path: '/visualization-socio-bosque',
       name: VisualizationSocioBosqueScreen.name,
-      builder: (context, state) => VisualizationSocioBosqueScreen(),
+      builder: (context, state) => const VisualizationSocioBosqueScreen(),
     ),
     GoRoute(
       path: '/report-socio-bosque',
       name: ReportSocioBosqueScreen.name,
-      builder: (context, state) => ReportSocioBosqueScreen(),
+      builder: (context, state) => const ReportSocioBosqueScreen(),
     ),
     GoRoute(
       path: '/report-socio-bosque-detalle',
       name: ReportSocioBosqueDetalleScreen.name,
-      builder: (context, state) => ReportSocioBosqueDetalleScreen(),
+      builder: (context, state) => const ReportSocioBosqueDetalleScreen(),
     ),
     GoRoute(
       path: '/form-control-forestal-propietario',
       name: FormControlForestalPropietarioScreen.name,
-      builder: (context, state) => FormControlForestalPropietarioScreen(),
+      builder: (context, state) => const FormControlForestalPropietarioScreen(),
     ),
     GoRoute(
       path: '/form-control-forestal-linea',
       name: FormControlForestaLineaScreen.name,
-      builder: (context, state) => FormControlForestaLineaScreen(),
+      builder: (context, state) => const FormControlForestaLineaScreen(),
     ),
     GoRoute(
       path: '/form-control-forestal-poblacion',
       name: FormControlForestaPoblacionScreen.name,
-      builder: (context, state) => FormControlForestaPoblacionScreen(),
+      builder: (context, state) => const FormControlForestaPoblacionScreen(),
     ),
     GoRoute(
       path: '/visualization-control-forestal',
       name: VisualizationControlForestalScreen.name,
-      builder: (context, state) => VisualizationControlForestalScreen(),
+      builder: (context, state) => const VisualizationControlForestalScreen(),
     ),
     GoRoute(
       path: '/report-control-forestal',
       name: ReportControlForestalScreen.name,
-      builder: (context, state) => ReportControlForestalScreen(),
+      builder: (context, state) => const ReportControlForestalScreen(),
     ),
     GoRoute(
       path: '/report-control-forestal-detalle',
       name: ReportControlForestalDetalleScreen.name,
-      builder: (context, state) => ReportControlForestalDetalleScreen(),
+      builder: (context, state) => const ReportControlForestalDetalleScreen(),
     ),
   ],
 );

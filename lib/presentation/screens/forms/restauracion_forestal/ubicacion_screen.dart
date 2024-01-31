@@ -12,7 +12,7 @@ class FormRestauracionForestalUbicacionScreen extends StatefulWidget {
   const FormRestauracionForestalUbicacionScreen({ super.key });
 
   @override
-  _UbicacionScreenState createState() => _UbicacionScreenState();
+  State<FormRestauracionForestalUbicacionScreen> createState() => _UbicacionScreenState();
 }
 
 class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScreen> {
@@ -53,7 +53,7 @@ class _UbicacionScreenState extends State<FormRestauracionForestalUbicacionScree
               children: [
                 Text('Datos ubicación', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

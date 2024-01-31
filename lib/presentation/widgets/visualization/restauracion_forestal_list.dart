@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RestauracionForestalList extends StatefulWidget {
-  Function(RestauracionForestal)? onTap;
-  RestauracionForestalList({ super.key, this.onTap });
+  final Function(RestauracionForestal)? onTap;
+  const RestauracionForestalList({ super.key, this.onTap });
 
   @override
-  _RestauracionForestalListState createState() => _RestauracionForestalListState();
+  State<RestauracionForestalList> createState() => _RestauracionForestalListState();
 }
 
 class _RestauracionForestalListState extends State<RestauracionForestalList> {
 
   @override
   void initState() {
+    super.initState();
     Provider.of<RestauracionForestalProvider>(context, listen: false).getAll();
   }
   
@@ -24,10 +25,10 @@ class _RestauracionForestalListState extends State<RestauracionForestalList> {
     final restauracionProvider = context.watch<RestauracionForestalProvider>();
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 70,
           child: Padding(
-            padding: EdgeInsets.only(left: 50, right: 50),
+            padding: const EdgeInsets.only(left: 50, right: 50),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar formulario',
@@ -39,7 +40,7 @@ class _RestauracionForestalListState extends State<RestauracionForestalList> {
         ),
         Expanded(
           child: ListView(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             children: buildItems(context),
           ),
         )

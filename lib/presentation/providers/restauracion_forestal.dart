@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:ecomap/domain/domain.dart';
-import 'package:ecomap/presentation/screens/home/home_screen.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,7 +8,6 @@ import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
-import 'dart:typed_data';
 import 'package:printing/printing.dart';
 
 class RestauracionForestalProvider with ChangeNotifier{
@@ -27,24 +25,24 @@ class RestauracionForestalProvider with ChangeNotifier{
   final cedulaController = TextEditingController();
   final nombreController = TextEditingController();
   final fechaController = TextEditingController();
-  String? fechaLanzamiento = null;
+  String? fechaLanzamiento;
   final equipoGPSController = TextEditingController();
   final provinciaController = TextEditingController();
-  String? _provincia = null;
+  String? _provincia;
   String? get provincia => _provincia;
   set provincia(String? value){
     _provincia = value;
     notifyListeners();
   }
   final cantonController = TextEditingController();
-  String? _canton = null;
+  String? _canton;
   String? get canton => _canton;
   set canton(String? value){
     _canton = value;
     notifyListeners();
   }
   final parroquiaController = TextEditingController();
-  String? _parroquia = null;
+  String? _parroquia;
   String? get parroquia => _parroquia;
   set parroquia(String? value){
     _parroquia = parroquia;
@@ -134,7 +132,6 @@ class RestauracionForestalProvider with ChangeNotifier{
   crear(BuildContext context) async{
     try {
       isLoading = true;
-      final currentPosition = await getLocation();
       final restauracion = RestauracionForestal(
         fechaRegistro: DateTime.now().toUtc(),  
         beneficiario: RestauracionBeneficiario(
@@ -218,25 +215,25 @@ class RestauracionForestalProvider with ChangeNotifier{
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return null;
+      return;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return null;
+        return;
       }
     }
     
     if (permission == LocationPermission.deniedForever) {
-      return null;
+      return;
     }
     final currentPosition = await Geolocator.getCurrentPosition();
     longitud = currentPosition.longitude;
     latitud = currentPosition.latitude;
     if(latitud != null){
-      coordenadasController.text = "${latitud} ; ${longitud}";
+      coordenadasController.text = "$latitud ; $longitud";
     }
   }
 
@@ -292,7 +289,7 @@ class RestauracionForestalProvider with ChangeNotifier{
         children: [
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 nombre,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),
@@ -301,7 +298,7 @@ class RestauracionForestalProvider with ChangeNotifier{
           ),
           pw.Expanded(
             child: pw.Padding(
-              padding: pw.EdgeInsets.all(8.0),
+              padding: const pw.EdgeInsets.all(8.0),
               child: pw.Text(
                 detalle,
                 style: pw.TextStyle(color: color != null ? PdfColors.white : null, font: font),

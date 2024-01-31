@@ -39,7 +39,7 @@ class Form1Screen extends StatelessWidget {
                 CustomDropdownButton(
                   label: 'Tipo de Socio',
                   hintText: 'Seleccione una opción',
-                  options: [
+                  options: const [
                     DropdownMenuEntry(value: 'Persona Natural', label: 'Persona Natural'),
                     DropdownMenuEntry(value: 'Empresa', label: 'Empresa'),
                   ],
@@ -122,53 +122,5 @@ class Form1Screen extends StatelessWidget {
         ],
       ),
    );
-  }
-}
-
-class _FormDatePicker extends StatelessWidget {
-  final DateTime? date;
-  final ValueChanged<DateTime> onChanged;
-  
-  const _FormDatePicker({
-    this.date,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final responsive = Responsive(context);
-    final texts = Theme.of(context).textTheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Fecha de Persona Jurídica', style: texts.bodyLarge),
-        Padding(
-          padding: EdgeInsets.only(top: responsive.hp(1.5), bottom: responsive.hp(3.5)),
-          child: TextFormField(
-            autocorrect: false,
-            keyboardType: TextInputType.datetime,
-            decoration: InputDecoration(
-              hintText: 'dd/mm/aaaa',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.edit_calendar_outlined),
-                onPressed: () async {
-                  var newDate = await showDatePicker(
-                    context: context,
-                    initialDate: date ?? DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
-                  );
-          
-                  // Don't change the date if the date picker returns null.
-                  if (newDate == null) return;
-                  onChanged(newDate);
-                },
-              )
-            ),
-          ),
-        )
-      ],
-    );
   }
 }

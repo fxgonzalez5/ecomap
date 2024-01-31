@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 class FormRestauracionForestalBeneficiarioScreen extends StatefulWidget {
   static const String name = 'form_restauracion_forestal_beneficiario_screen';
-  FormRestauracionForestalBeneficiarioScreen({ super.key });
+  const FormRestauracionForestalBeneficiarioScreen({ super.key });
 
   @override
-  _BeneficiarioScreenState createState() => _BeneficiarioScreenState();
+  State<FormRestauracionForestalBeneficiarioScreen> createState() => _BeneficiarioScreenState();
 }
 
 class _BeneficiarioScreenState extends State<FormRestauracionForestalBeneficiarioScreen> {
@@ -48,7 +48,7 @@ class _BeneficiarioScreenState extends State<FormRestauracionForestalBeneficiari
               children: [
                 Text('Datos generales', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class _BeneficiarioScreenState extends State<FormRestauracionForestalBeneficiari
                           controller: restauracionProvider.nombreController,
                         ),
                         Text('Detalles levantamiento', style: texts.titleLarge),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         CustomInputText(
                           label: 'Fecha de lanzamiento',
                           hintText: 'mm/dd/yyyy',

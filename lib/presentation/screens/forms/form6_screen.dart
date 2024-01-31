@@ -48,7 +48,7 @@ class Form6Screen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Ubicación del Predio', style: texts.titleLarge),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         CustomInputText(
                           label: 'Ubicación actual',
                           hintText: '',
@@ -74,7 +74,7 @@ class Form6Screen extends StatelessWidget {
                           controller: socioProvider.descripcionUbicacion,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
                           child: Text('Linderos del predio', style: texts.titleLarge),
                         ),
                         CustomInputText(

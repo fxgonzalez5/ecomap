@@ -4,7 +4,6 @@ import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ class FormControlForestalPropietarioScreen extends StatefulWidget {
   const FormControlForestalPropietarioScreen({ super.key });
 
   @override
-  _PropietarioState createState() => _PropietarioState();
+  State<FormControlForestalPropietarioScreen> createState() => _PropietarioState();
 }
 
 class _PropietarioState extends State<FormControlForestalPropietarioScreen> {
@@ -47,7 +46,7 @@ class _PropietarioState extends State<FormControlForestalPropietarioScreen> {
               children: [
                 Text('Contacto del dueño del predio', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

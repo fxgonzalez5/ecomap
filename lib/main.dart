@@ -1,8 +1,6 @@
-import 'package:ecomap/di/dependencyInjection.dart';
+import 'package:ecomap/di/dependency_injection.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:ecomap/config/firebase/firebase_options.dart';
 import 'package:ecomap/config/router/app_router.dart';
 import 'package:ecomap/config/theme/app_theme.dart';
 import 'package:ecomap/presentation/providers/providers.dart';

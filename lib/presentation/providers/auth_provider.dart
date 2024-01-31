@@ -2,7 +2,6 @@ import 'package:ecomap/config/helpers/helpers.dart';
 import 'package:ecomap/domain/domain.dart';
 import 'package:ecomap/presentation/screens/auth/check_auth_screen.dart';
 import 'package:ecomap/presentation/screens/auth/verification_screen.dart';
-import 'package:ecomap/presentation/screens/home/home_screen.dart';
 import 'package:ecomap/presentation/services/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -69,8 +68,5 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> getCurrentUser() async{
     currentUser = await _firebaseAuthService.getCurrentUser();
-    print(currentUser?.email);
-    print(currentUser?.role);
-    print(currentUser?.project);
   }
 }

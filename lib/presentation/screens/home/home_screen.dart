@@ -1,5 +1,4 @@
 import 'package:ecomap/domain/domain.dart';
-import 'package:ecomap/presentation/providers/auth_provider.dart';
 import 'package:ecomap/presentation/providers/control_forestal.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/reports/socio_bosque.dart';
@@ -47,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           icon: const Icon(Icons.exit_to_app,),
           onPressed: () async {
             await FirebaseAuthService().logout();
-            context.pushReplacementNamed(LoginScreen.name);
+            Future.microtask(() => context.pushReplacementNamed(LoginScreen.name));
           },
         )
       ],

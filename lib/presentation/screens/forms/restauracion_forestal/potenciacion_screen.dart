@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
-import 'package:ecomap/presentation/screens/screens.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +14,7 @@ class FormRestauracionForestalPotenciacionScreen extends StatefulWidget {
   const FormRestauracionForestalPotenciacionScreen({ super.key });
 
   @override
-  _PotenciacionScreenState createState() => _PotenciacionScreenState();
+  State<FormRestauracionForestalPotenciacionScreen> createState() => _PotenciacionScreenState();
 }
 
 class _PotenciacionScreenState extends State<FormRestauracionForestalPotenciacionScreen> {
@@ -46,7 +44,7 @@ class _PotenciacionScreenState extends State<FormRestauracionForestalPotenciacio
               children: [
                 Text('Datos Viveros', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +62,8 @@ class _PotenciacionScreenState extends State<FormRestauracionForestalPotenciacio
                           controller: restauracionProvider.actividadesController,
                         ),
                         Text('Informe de actividades', style: texts.titleLarge),
-                        _ImageUpload(),
-                        SizedBox(height: 15,),
+                        const _ImageUpload(),
+                        const SizedBox(height: 15,),
                         FilledButton(
                           onPressed: restauracionProvider.isLoading ? null :  ()=> restauracionProvider.submitForm(context),
                           child:  restauracionProvider.isLoading ? 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
   
   Stream<User?> authStatus() {
     return _auth.authStateChanges();
@@ -13,7 +13,7 @@ class FirebaseAuthService {
 
   Future<String?> login(String email, String password) async {
     try {
-      final UserCredential credential = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

@@ -78,12 +78,12 @@ class Form9Screen extends StatelessWidget {
                           children: socioProvider.suelos.map((x) => 
                             Card(
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: ListTile(
                                   title: Text(x.tipo ?? '--', style: texts.bodyLarge,),
                                   subtitle: Text(x.superficie ?? '--', style: texts.bodyMedium,),
                                   trailing: IconButton(
-                                    icon: Icon(Icons.delete,),
+                                    icon: const Icon(Icons.delete,),
                                     onPressed: ()=> socioProvider.eliminarSuelo(x),
                                   ),
                                 ),

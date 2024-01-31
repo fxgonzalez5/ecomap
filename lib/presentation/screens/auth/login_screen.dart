@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import 'package:ecomap/config/helpers/show_scnack_bar.dart';
-import 'package:ecomap/presentation/services/firebase_auth_service.dart';
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/screens/screens.dart';
@@ -57,7 +54,6 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final responsive = Responsive(context);
-    final firebaseAuthService = FirebaseAuthService();
     final authProvider = context.watch<AuthProvider>();
 
     return Form(

@@ -1,6 +1,4 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecomap/data/data.dart';
 import 'package:ecomap/data/dto/control_forestal.dart';
 import 'package:ecomap/domain/domain.dart';
 

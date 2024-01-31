@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 class VisualizationSocioBosqueScreen extends StatefulWidget {
   static const String name = 'visualization_socio_bosque_screen';
 
-  VisualizationSocioBosqueScreen({ super.key });
+  const VisualizationSocioBosqueScreen({ super.key });
 
   @override
-  _SocioBosqueState createState() => _SocioBosqueState();
+  State<VisualizationSocioBosqueScreen> createState() => _SocioBosqueState();
 }
 
 class _SocioBosqueState extends State<VisualizationSocioBosqueScreen> {

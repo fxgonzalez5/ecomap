@@ -1,4 +1,3 @@
-import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/widgets/visualization/restauracion_forestal_list.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ class ReportRestauracionForestalScreen extends StatefulWidget {
   const ReportRestauracionForestalScreen({ super.key });
 
   @override
-  _RestauracionForestalState createState() => _RestauracionForestalState();
+  State<ReportRestauracionForestalScreen> createState() => _RestauracionForestalState();
 }
 
 class _RestauracionForestalState extends State<ReportRestauracionForestalScreen> {

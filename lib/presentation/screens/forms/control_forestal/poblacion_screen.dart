@@ -1,10 +1,7 @@
 import 'package:ecomap/config/theme/responsive.dart';
 import 'package:ecomap/presentation/providers/control_forestal.dart';
-import 'package:ecomap/presentation/providers/providers.dart';
 import 'package:ecomap/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class FormControlForestaPoblacionScreen extends StatefulWidget {
@@ -12,7 +9,7 @@ class FormControlForestaPoblacionScreen extends StatefulWidget {
   const FormControlForestaPoblacionScreen({ super.key });
 
   @override
-  _PropietarioState createState() => _PropietarioState();
+  State<FormControlForestaPoblacionScreen> createState() => _PropietarioState();
 }
 
 class _PropietarioState extends State<FormControlForestaPoblacionScreen> {
@@ -21,7 +18,6 @@ class _PropietarioState extends State<FormControlForestaPoblacionScreen> {
     final responsive = Responsive(context);
     final texts = Theme.of(context).textTheme;
     final controlProvider = context.watch<ControlForestalProvider>();
-    final generalProvider = context.watch<GeneralProvider>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -43,7 +39,7 @@ class _PropietarioState extends State<FormControlForestaPoblacionScreen> {
               children: [
                 Text('Población que depende del sector forestal', style: texts.titleLarge),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Form(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

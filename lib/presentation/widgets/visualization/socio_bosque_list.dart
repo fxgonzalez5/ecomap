@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SocioBosqueList extends StatefulWidget {
-  Function(SocioBosque)? onTap;
-  SocioBosqueList({ super.key, this.onTap });
+  final Function(SocioBosque)? onTap;
+  const SocioBosqueList({ super.key, this.onTap });
 
   @override
-  _SocioBosqueListState createState() => _SocioBosqueListState();
+  State<SocioBosqueList> createState() => _SocioBosqueListState();
 }
 
 class _SocioBosqueListState extends State<SocioBosqueList> {
 
   @override
   void initState() {
+    super.initState();
     Provider.of<SocioBosqueProvider>(context, listen: false).getAll();
   }
   
@@ -24,10 +25,10 @@ class _SocioBosqueListState extends State<SocioBosqueList> {
     final socioProvider = context.watch<SocioBosqueProvider>();
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 70,
           child: Padding(
-            padding: EdgeInsets.only(left: 50, right: 50),
+            padding: const EdgeInsets.only(left: 50, right: 50),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar formulario',
@@ -39,7 +40,7 @@ class _SocioBosqueListState extends State<SocioBosqueList> {
         ),
         Expanded(
           child: ListView(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             children: buildItems(context),
           ),
         )
